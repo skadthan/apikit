@@ -15,6 +15,7 @@ import org.mule.raml.interfaces.model.IRaml;
 import org.mule.runtime.core.exception.TypedException;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -210,7 +211,7 @@ public class RamlHandler
 
     private String findRootRaml(String ramlLocation)
     {
-        String[] startingLocations = new String[]{"", "api/", "api"};
+        String[] startingLocations = new String[]{"", "api" + File.separator, "api", File.separator + "api" + File.separator};
         for (String start : startingLocations)
         {
             URL ramlLocationUrl = Thread.currentThread().getContextClassLoader().getResource(start + ramlLocation);

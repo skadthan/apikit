@@ -10,8 +10,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <properties>
-        <metadata.api.version>1.0.0-SNAPSHOT</metadata.api.version>
-        <mule.version>4.0.0-SNAPSHOT</mule.version>
+        <metadata.api.version>1.0.0-rc.cyborg</metadata.api.version>
+        <mule.version>4.0.0-rc.cyborg</mule.version>
     </properties>
 
     <artifactId>mule-apikit-metadata</artifactId>

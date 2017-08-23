@@ -65,14 +65,14 @@ public class ScaffolderAPI {
      */
     public void run(List<File> ramlFiles, File appDir, File domainDir, String minMuleVersion, RuntimeEdition runtimeEdition)
     {
-        if (ExtensionManager.isScaffolderExtensionEnabled())
-        {
-            ExtensionManager.getScaffolderExtension().executeScaffolder(ramlFiles, appDir, domainDir, minMuleVersion, runtimeEdition.name());
-        }
-        else
-        {
+//        if (ExtensionManager.isScaffolderExtensionEnabled())
+//        {
+//            ExtensionManager.getScaffolderExtension().executeScaffolder(ramlFiles, appDir, domainDir, minMuleVersion, runtimeEdition.name());
+//        }
+//        else
+//        {
             execute(ramlFiles, appDir, domainDir, minMuleVersion, runtimeEdition);
-        }
+//        }
     }
 
     /**

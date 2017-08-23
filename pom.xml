@@ -8,9 +8,9 @@
     <name>APIKit parent</name>
 
     <modules>
-        <module>parser-wrapper</module>
-        <module>mule-apikit-module</module>
-        <module>mule-apikit-tools</module>
+        <!--<module>parser-wrapper</module>-->
+        <!--<module>mule-apikit-module</module>-->
+        <!--<module>mule-apikit-tools</module>-->
         <module>mule-apikit-metadata</module>
     </modules>
 

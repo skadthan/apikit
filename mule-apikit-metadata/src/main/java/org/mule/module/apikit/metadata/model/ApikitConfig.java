@@ -10,37 +10,34 @@ import org.mule.module.apikit.metadata.raml.RamlApiWrapper;
 
 import java.util.List;
 
-public class ApikitConfig
-{
-    private String name;
-    private String raml;
-    private List<FlowMapping> flowMappings;
-    private RamlApiWrapper ramlApi;
+public class ApikitConfig {
 
-    public ApikitConfig(String name, String raml, List<FlowMapping> flowMappings, RamlApiWrapper ramlApi) {
-        this.name = name;
-        this.raml = raml;
-        this.flowMappings = flowMappings;
-        this.ramlApi = ramlApi;
-    }
+  private String name;
+  private String raml;
+  private List<FlowMapping> flowMappings;
+  private RamlApiWrapper ramlApi;
 
-    public String getName()
-    {
-        return name;
-    }
+  public ApikitConfig(String name, String raml, List<FlowMapping> flowMappings, RamlApiWrapper ramlApi) {
+    this.name = name;
+    this.raml = raml;
+    this.flowMappings = flowMappings;
+    this.ramlApi = ramlApi;
+  }
 
-    public String getRaml()
-    {
-        return raml;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public List<FlowMapping> getFlowMappings()
-    {
-        return flowMappings;
-    }
+  public String getRaml() {
+    return raml;
+  }
 
-    public RamlApiWrapper getApi() {
-        return ramlApi;
-    }
+  public List<FlowMapping> getFlowMappings() {
+    return flowMappings;
+  }
+
+  public RamlApiWrapper getApi() {
+    return ramlApi;
+  }
 
 }

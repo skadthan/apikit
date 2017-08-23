@@ -16,66 +16,56 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class RamlHandler
-{
-    public static final String PARSER_V2_PROPERTY = "apikit.raml.parser.v2";
+public class RamlHandler {
 
-    private ResourceLoader resourceLoader;
+  public static final String PARSER_V2_PROPERTY = "apikit.raml.parser.v2";
 
-    public RamlHandler(ResourceLoader resourceLoader) {
-        this.resourceLoader = resourceLoader;
+  private ResourceLoader resourceLoader;
+
+  public RamlHandler(ResourceLoader resourceLoader) {
+    this.resourceLoader = resourceLoader;
+  }
+
+  public IRaml getRamlApi(String uri) {
+
+    try {
+      File ramlFile = resourceLoader.getRamlResource(uri);
+      String ramlContent = getRamlContent(ramlFile);
+      Parseable parser = getParser(ramlContent);
+      return parser.build(ramlFile, ramlContent);
+
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
     }
 
-    public IRaml getRamlApi(String uri) {
+    return null;
+  }
 
-        try
-        {
-            File ramlFile = resourceLoader.getRamlResource(uri);
-            String ramlContent = getRamlContent(ramlFile);
-            Parseable parser = getParser(ramlContent);
-            return parser.build(ramlFile, ramlContent);
+  private Parseable getParser(String ramlContent) {
+    if (useParserV2(ramlContent)) {
+      return new RamlV2Parser();
+    } else {
+      return new RamlV1Parser();
+    }
+  }
 
-        } catch (FileNotFoundException e)
-        {
-            e.printStackTrace();
-        }
+  private String getRamlContent(File uri) throws FileNotFoundException {
+    try {
+      return IOUtils.toString(new FileInputStream(uri));
 
-        return null;
+    } catch (IOException e) {
+      e.printStackTrace();
     }
 
-    private Parseable getParser(String ramlContent)
-    {
-        if (useParserV2(ramlContent)) {
-            return new RamlV2Parser();
-        } else {
-            return new RamlV1Parser();
-        }
+    return null;
+  }
+
+  private static boolean useParserV2(String content) {
+    String property = System.getProperty(PARSER_V2_PROPERTY);
+    if (property != null && Boolean.valueOf(property)) {
+      return true;
+    } else {
+      return content.startsWith("#%RAML 1.0");
     }
-
-    private String getRamlContent(File uri) throws FileNotFoundException
-    {
-        try
-        {
-            return IOUtils.toString(new FileInputStream(uri));
-
-        } catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    private static boolean useParserV2(String content)
-    {
-        String property = System.getProperty(PARSER_V2_PROPERTY);
-        if (property != null && Boolean.valueOf(property))
-        {
-            return true;
-        }
-        else
-        {
-            return content.startsWith("#%RAML 1.0");
-        }
-    }
+  }
 }

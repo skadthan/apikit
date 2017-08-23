@@ -60,8 +60,6 @@ public class MetadataFactory {
       root = jsonExampleTypeLoader.load(null);
 
     } catch (Exception e) {
-
-      System.out.println("[ ERROR ] There was a problem when trying to parse example : " + jsonExample);
     }
 
     // We didn't managed to parse the schema.

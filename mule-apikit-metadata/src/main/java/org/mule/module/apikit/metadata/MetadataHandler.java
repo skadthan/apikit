@@ -27,7 +27,6 @@ public class MetadataHandler {
     RamlCoordinate coordinate = applicationModelWrapper.getRamlCoordinatesForFlow(flowName);
 
     if (coordinate == null) {
-      System.out.println("[ ERROR ] There is no metadata for flow " + flowName); // TODO: REPLACE WITH API FUNCTION
       return Optional.empty();
     }
 

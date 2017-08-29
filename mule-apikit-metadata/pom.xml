@@ -5,13 +5,13 @@
     <parent>
         <artifactId>mule-apikit-parent</artifactId>
         <groupId>org.mule.tools</groupId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.0.0-rc.darkseid</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <properties>
-        <metadata.api.version>1.0.0-SNAPSHOT</metadata.api.version>
-        <mule.version>4.0.0-SNAPSHOT</mule.version>
+        <metadata.api.version>1.0.0-rc.darkseid</metadata.api.version>
+        <mule.version>4.0.0-rc.darkseid</mule.version>
         <licensePath>../LICENSE_HEADER.txt</licensePath>
         <formatterConfigPath>../formatter.xml</formatterConfigPath>
     </properties>

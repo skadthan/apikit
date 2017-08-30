@@ -11,7 +11,7 @@
 
     <properties>
         <mule.maven.plugin.version>3.0.0-rc.darkseid</mule.maven.plugin.version>
-        <mule.http.connector.version>1.0.0-rc.darkseid</mule.http.connector.version>
+        <mule.http.connector.version>0.9.0-rc.darkseid</mule.http.connector.version>
     </properties>
     <build>
         <plugins>

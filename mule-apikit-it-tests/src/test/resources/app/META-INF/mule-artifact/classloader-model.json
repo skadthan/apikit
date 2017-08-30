@@ -1,0 +1,21 @@
+{
+  "version": "1.0.0",
+  "artifactCoordinates": {
+    "groupId": "org.mule.test",
+    "artifactId": "app",
+    "version": "1.0.0",
+    "type": "pom"
+  },
+  "dependencies": [
+    {
+      "artifactCoordinates": {
+        "groupId": "org.mule.modules",
+        "artifactId": "mule-apikit-module",
+        "version": "1.0.0-SNAPSHOT",
+        "type": "jar",
+        "classifier": "mule-plugin"
+      },
+      "uri": "../../../../mule-apikit-module/target/mule-apikit-module-1.0.0-SNAPSHOT-mule-plugin.jar"
+    }
+  ]
+}

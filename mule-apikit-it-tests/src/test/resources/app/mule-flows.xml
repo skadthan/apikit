@@ -8,10 +8,10 @@
       http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
 
     <http:listener-config name="httpListenerConfigDefault">
-        <http:listener-connection host="localhost" port="${serverPort}"/>
+        <http:listener-connection host="localhost" port="8081"/>
     </http:listener-config>
 
-    <apikit:config name="apikitConfig" raml="org/mule/module/apikit/simple-routing/simple.raml"
+    <apikit:config name="apikitConfig" raml="api.raml"
                    outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus"/>
 
     <flow name="doorway">
@@ -49,16 +49,6 @@
     <flow name="get:\resources">
         <logger level="INFO" message="inside of get:\resources"/>
         <set-payload value="hello"/>
-    </flow>
-
-    <flow name="post:\types-test">
-        <logger level="INFO" message="inside of post:\types-test"/>
-        <set-payload value="hello"/>
-    </flow>
-
-    <flow name="post:\reusing-payload">
-        <logger level="INFO" message="inside of post:\reusing-payload"/>
-        <set-payload value="#[payload]"/>
     </flow>
 
 </mule>

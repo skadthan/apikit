@@ -14,6 +14,7 @@
         <module>mule-apikit-tools</module>
         <module>mule-apikit-examples</module>
         <module>mule-apikit-metadata</module>
+        <module>mule-apikit-it-tests</module>
     </modules>
 
     <properties>
@@ -265,15 +266,6 @@
             </plugins>
         </pluginManagement>
     </build>
-
-    <profiles>
-        <profile>
-            <id>integration-tests</id>
-            <modules>
-                <module>mule-apikit-it-tests</module>
-            </modules>
-        </profile>
-    </profiles>
 
     <repositories>
         <repository>

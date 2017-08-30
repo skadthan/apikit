@@ -96,7 +96,7 @@ public class ApikitExtensionLoadingDelegate implements ExtensionLoadingDelegate 
     //router
     OperationDeclarer routerDeclarer = apikitConfig.withOperation("router");
     routerDeclarer.withOutputAttributes().ofType(typeLoader.load(HttpRequestAttributes.class));
-    routerDeclarer.withOutput().ofType(typeLoader.load(Object.class));
+    routerDeclarer.withOutput().ofType(typeBuilder.anyType().build());
     routerDeclarer.withErrorModel(badRequestErrorModel)
         .withErrorModel(notAcceptableErrorModel)
         .withErrorModel(unsupportedMediaTypeErrorModel)
@@ -106,7 +106,7 @@ public class ApikitExtensionLoadingDelegate implements ExtensionLoadingDelegate 
     //console
     OperationDeclarer consoleDeclarer = apikitConfig.withOperation("console");
     consoleDeclarer.withOutputAttributes().ofType(typeLoader.load(HttpRequestAttributes.class));
-    consoleDeclarer.withOutput().ofType(typeLoader.load(Object.class));
+    consoleDeclarer.withOutput().ofType(typeBuilder.anyType().build());
     consoleDeclarer.withErrorModel(notFoundErrorModel);
 
   }

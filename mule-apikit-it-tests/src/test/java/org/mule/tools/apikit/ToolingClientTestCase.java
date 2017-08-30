@@ -27,45 +27,50 @@ import java.io.File;
 
 import org.junit.Test;
 
-public class ToolingClientTestCase
-{
-    @Test
-    public void loadExtensionModel()
-    {
-        ToolingRuntimeClientBootstrap toolingRuntimeClientBootstrap = new ToolingRuntimeClientBootstrap("4.0.0-BETA.1-SNAPSHOT", createMavenConfiguration());
-        ExtensionModelService extensionModelService = toolingRuntimeClientBootstrap.newToolingRuntimeClientBuilder().build().extensionModelService();
-        ArtifactDescriptor artifactDescriptor = ArtifactDescriptor.newBuilder().withGroupId("org.mule.modules").withArtifactId("mule-apikit-module").withClassifier("mule-plugin").withVersion("1.0.0-BETA-SNAPSHOT").build();
-        assertEquals("APIKit",extensionModelService.loadExtensionModel(artifactDescriptor).get().getName());
-    }
+public class ToolingClientTestCase {
 
-    @Test
-    public void loadDataSense()
-    {
-        ToolingRuntimeClientBootstrap toolingRuntimeClientBootstrap = new ToolingRuntimeClientBootstrap("4.0.0-BETA.1-SNAPSHOT", createMavenConfiguration());
-        ToolingRuntimeClient toolingRuntimeClient = toolingRuntimeClientBootstrap.newToolingRuntimeClientBuilder().build();
-        ToolingArtifact toolingArtifact = toolingRuntimeClient.newToolingArtifact(() -> this.getClass().getClassLoader().getResource("app"));
-        assertNotNull(toolingArtifact);
-        DataSenseRequest dataSenseRequest = new DataSenseRequest();
-        dataSenseRequest.setLocation(Location.builder().globalName("doorway").addProcessorsPart().addIndexPart(1).build());
-        dataSenseRequest.setMetadataTimeout(100);
+  @Test
+  public void loadExtensionModel() {
+    String toolingClientVersion = "4.0.0-SNAPSHOT";
+    String apikitVersion = "1.0.0-SNAPSHOT";
+    ToolingRuntimeClientBootstrap toolingRuntimeClientBootstrap =
+        new ToolingRuntimeClientBootstrap(toolingClientVersion, createMavenConfiguration());
+    ExtensionModelService extensionModelService =
+        toolingRuntimeClientBootstrap.newToolingRuntimeClientBuilder().build().extensionModelService();
+    ArtifactDescriptor artifactDescriptor = ArtifactDescriptor.newBuilder().withGroupId("org.mule.modules")
+        .withArtifactId("mule-apikit-module").withClassifier("mule-plugin").withVersion(apikitVersion).build();
+    assertEquals("APIKit", extensionModelService.loadExtensionModel(artifactDescriptor).get().getName());
+  }
 
-        toolingArtifact.dataSenseService().resolveDataSense(dataSenseRequest);
-    }
+  @Test
+  public void loadDataSense() {
+    String toolingClientVersion = "4.0.0-SNAPSHOT";
+    ToolingRuntimeClientBootstrap toolingRuntimeClientBootstrap =
+        new ToolingRuntimeClientBootstrap(toolingClientVersion, createMavenConfiguration());
+    ToolingRuntimeClient toolingRuntimeClient = toolingRuntimeClientBootstrap.newToolingRuntimeClientBuilder().build();
+    ToolingArtifact toolingArtifact =
+        toolingRuntimeClient.newToolingArtifact(this.getClass().getClassLoader().getResource("app"));
+    assertNotNull(toolingArtifact);
+    DataSenseRequest dataSenseRequest = new DataSenseRequest();
+    dataSenseRequest.setLocation(Location.builder().globalName("get:\\resources").addProcessorsPart().addIndexPart(1).build());
+    dataSenseRequest.setMetadataTimeout(100);
 
-    public MavenConfiguration createMavenConfiguration()
-    {
-        MavenConfiguration.MavenConfigurationBuilder mavenConfigurationBuilder =
-                newMavenConfigurationBuilder().withForcePolicyUpdateNever(true);
+    toolingArtifact.dataSenseService().resolveDataSense(dataSenseRequest);
+  }
 
-        final File localMavenRepository = new DefaultLocalRepositorySupplierFactory().environmentMavenRepositorySupplier().get();
-        mavenConfigurationBuilder.withLocalMavenRepositoryLocation(localMavenRepository);
+  public MavenConfiguration createMavenConfiguration() {
+    MavenConfiguration.MavenConfigurationBuilder mavenConfigurationBuilder =
+        newMavenConfigurationBuilder().forcePolicyUpdateNever(true);
 
-        final DefaultSettingsSupplierFactory settingsSupplierFactory =
-                new DefaultSettingsSupplierFactory(new MavenEnvironmentVariables());
+    final File localMavenRepository = new DefaultLocalRepositorySupplierFactory().environmentMavenRepositorySupplier().get();
+    mavenConfigurationBuilder.localMavenRepositoryLocation(localMavenRepository);
 
-        settingsSupplierFactory.environmentUserSettingsSupplier().ifPresent(mavenConfigurationBuilder::withUserSettingsLocation);
-        settingsSupplierFactory.environmentGlobalSettingsSupplier().ifPresent(mavenConfigurationBuilder::withGlobalSettingsLocation);
+    final DefaultSettingsSupplierFactory settingsSupplierFactory =
+        new DefaultSettingsSupplierFactory(new MavenEnvironmentVariables());
 
-        return mavenConfigurationBuilder.build();
-    }
+    settingsSupplierFactory.environmentUserSettingsSupplier().ifPresent(mavenConfigurationBuilder::userSettingsLocation);
+    settingsSupplierFactory.environmentGlobalSettingsSupplier().ifPresent(mavenConfigurationBuilder::globalSettingsLocation);
+
+    return mavenConfigurationBuilder.build();
+  }
 }

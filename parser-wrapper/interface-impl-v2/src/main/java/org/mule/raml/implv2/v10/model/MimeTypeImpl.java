@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.raml.v2.api.model.common.ValidationResult;
+import org.raml.v2.api.model.v10.datamodel.ArrayTypeDeclaration;
 import org.raml.v2.api.model.v10.datamodel.ExampleSpec;
 import org.raml.v2.api.model.v10.datamodel.ObjectTypeDeclaration;
 import org.raml.v2.api.model.v10.datamodel.TypeDeclaration;
@@ -82,5 +83,10 @@ public class MimeTypeImpl implements IMimeType {
   @Override
   public Object getInstance() {
     throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public String getTypeName() {
+    return typeDeclaration instanceof ObjectTypeDeclaration ? typeDeclaration.type() : null;
   }
 }

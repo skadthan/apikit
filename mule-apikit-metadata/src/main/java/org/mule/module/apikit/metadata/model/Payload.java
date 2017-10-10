@@ -33,12 +33,14 @@ public class Payload {
     String type = body.getType();
     String schema = body.getSchema();
     String example = body.getExample();
+    @Nullable
+    String name = body.getTypeName();
 
     switch (type) {
       case MIME_APPLICATION_JSON:
-        return applicationJsonMetadata(schema, example);
+        return applicationJsonMetadata(schema, example, name);
       case MIME_APPLICATION_XML:
-        return applicationXmlMetadata(schema, example);
+        return applicationXmlMetadata(schema, example, name);
       case MIME_APPLICATION_URL_ENCODED:
         return formMetadata(body.getFormParameters());
       case MIME_MULTIPART_FORM_DATA:
@@ -53,9 +55,9 @@ public class Payload {
     return MetadataFactory.fromFormMetadata(formParameters);
   }
 
-  private static MetadataType applicationXmlMetadata(String schema, String example) {
+  private static MetadataType applicationXmlMetadata(String schema, String example, String name) {
     if (schema != null) {
-      return MetadataFactory.fromXSDSchema(schema);
+      return MetadataFactory.fromXSDSchema(schema, name);
 
     } else if (example != null) {
       return MetadataFactory.fromXMLExample(example);
@@ -64,9 +66,9 @@ public class Payload {
     return MetadataFactory.defaultMetadata();
   }
 
-  private static MetadataType applicationJsonMetadata(String schema, String example) {
+  private static MetadataType applicationJsonMetadata(String schema, String example, String name) {
     if (schema != null) {
-      return MetadataFactory.fromJsonSchema(schema);
+      return MetadataFactory.fromJsonSchema(schema, name);
     } else if (example != null) {
       return MetadataFactory.fromJsonExample(example);
     }

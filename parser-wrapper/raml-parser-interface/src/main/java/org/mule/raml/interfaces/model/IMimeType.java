@@ -27,4 +27,6 @@ public interface IMimeType {
   String getExample();
 
   Object getInstance();
+
+  String getTypeName();
 }

@@ -1,6 +1,6 @@
 %type _:Java = (inputMetadata:{
   "message" : @typeId("value" : "org.mule.runtime.api.message.Message") {
-    "payload" : {
+    "payload" : @typeAlias("value" : "Book") {
       "author"? : String, 
       "available"? : Boolean, 
       "title"? : String, 

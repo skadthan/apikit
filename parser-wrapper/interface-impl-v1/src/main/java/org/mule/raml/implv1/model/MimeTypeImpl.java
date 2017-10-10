@@ -17,6 +17,8 @@ import org.mule.raml.interfaces.model.parameter.IParameter;
 import org.raml.model.MimeType;
 import org.raml.model.parameter.FormParameter;
 
+import javax.annotation.Nullable;
+
 public class MimeTypeImpl implements IMimeType {
 
   MimeType mimeType;
@@ -62,5 +64,11 @@ public class MimeTypeImpl implements IMimeType {
 
   public MimeType getInstance() {
     return mimeType;
+  }
+
+  @Override
+  @Nullable
+  public String getTypeName() {
+    return null;
   }
 }

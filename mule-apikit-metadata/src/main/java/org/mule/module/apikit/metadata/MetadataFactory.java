@@ -34,10 +34,10 @@ public class MetadataFactory {
    * @param jsonSchema The schema we want to create metadata from
    * @return The metadata if the Schema is valid, null otherwise
    */
-  public static MetadataType fromJsonSchema(String jsonSchema) {
+  public static MetadataType fromJsonSchema(String jsonSchema, String name) {
 
-    JsonTypeLoader jsonTypeLoader = new JsonTypeLoader(jsonSchema);
-    final Optional<MetadataType> root = jsonTypeLoader.load(null);
+    final JsonTypeLoader typeLoader = new JsonTypeLoader(jsonSchema);
+    final Optional<MetadataType> root = typeLoader.load(null, name);
 
     // We didn't managed to parse the schema.
     return root.orElse(defaultMetadata());
@@ -73,7 +73,7 @@ public class MetadataFactory {
    * @param xsdSchema
    * @return
    */
-  public static MetadataType fromXSDSchema(String xsdSchema) {
+  public static MetadataType fromXSDSchema(String xsdSchema, String name) {
     // TODO: 7/26/17  
     return defaultMetadata();
   }

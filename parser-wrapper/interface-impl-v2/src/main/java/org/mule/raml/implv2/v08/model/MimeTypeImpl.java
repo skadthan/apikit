@@ -17,6 +17,8 @@ import java.util.Map;
 import org.raml.v2.api.model.v08.bodies.BodyLike;
 import org.raml.v2.api.model.v08.parameters.Parameter;
 
+import javax.annotation.Nullable;
+
 public class MimeTypeImpl implements IMimeType {
 
   private BodyLike bodyLike;
@@ -59,5 +61,11 @@ public class MimeTypeImpl implements IMimeType {
   @Override
   public Object getInstance() {
     throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Nullable
+  public String getTypeName() {
+    return null;
   }
 }

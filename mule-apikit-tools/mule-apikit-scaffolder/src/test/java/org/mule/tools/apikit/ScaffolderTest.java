@@ -14,7 +14,6 @@ import static org.mule.tools.apikit.Helper.countOccurences;
 import static org.mule.tools.apikit.Scaffolder.DEFAULT_MULE_VERSION;
 import static org.mule.tools.apikit.Scaffolder.DEFAULT_RUNTIME_EDITION;
 
-import org.mule.raml.implv2.ParserV2Utils;
 import org.mule.tools.apikit.misc.FileListUtils;
 
 import java.io.File;
@@ -134,7 +133,6 @@ public class ScaffolderTest {
   @Test
   @Ignore
   public void testSimpleGenerateWithExtensionWithNewParser() throws Exception {
-    System.setProperty(ParserV2Utils.PARSER_V2_PROPERTY, "true");
     testSimpleGenerateWithExtension();
   }
 
@@ -161,7 +159,6 @@ public class ScaffolderTest {
   @Test
   @Ignore
   public void testSimpleGenerateWithExtensionInNullWithNewParser() throws Exception {
-    System.setProperty(ParserV2Utils.PARSER_V2_PROPERTY, "true");
     testSimpleGenerateWithExtensionInNull();
   }
 
@@ -188,7 +185,6 @@ public class ScaffolderTest {
   @Test
   @Ignore
   public void testSimpleGenerateWithInboundEndpointWithNewParser() throws Exception {
-    System.setProperty(ParserV2Utils.PARSER_V2_PROPERTY, "true");
     testSimpleGenerateWithInboundEndpoint();
   }
 
@@ -215,7 +211,6 @@ public class ScaffolderTest {
   @Test
   @Ignore
   public void testSimpleGenerateWithListenerWithNewParser() throws Exception {
-    System.setProperty(ParserV2Utils.PARSER_V2_PROPERTY, "true");
     testSimpleGenerateWithListener();
   }
 
@@ -242,7 +237,6 @@ public class ScaffolderTest {
   @Test
   @Ignore
   public void testSimpleGenerateWithListenerAndExtensionWithNewParser() throws Exception {
-    System.setProperty(ParserV2Utils.PARSER_V2_PROPERTY, "true");
     testSimpleGenerateWithListenerAndExtension();
   }
 
@@ -270,7 +264,6 @@ public class ScaffolderTest {
   @Test
   @Ignore
   public void testSimpleGenerateWithCustomDomainWithNewParser() throws Exception {
-    System.setProperty(ParserV2Utils.PARSER_V2_PROPERTY, "true");
     testSimpleGenerateWithCustomDomain();
   }
 
@@ -297,7 +290,6 @@ public class ScaffolderTest {
   @Test
   @Ignore
   public void testSimpleGenerateWithCustomDomainAndExtensionWithNewParser() throws Exception {
-    System.setProperty(ParserV2Utils.PARSER_V2_PROPERTY, "true");
     testSimpleGenerateWithCustomDomainAndExtension();
   }
 
@@ -326,7 +318,6 @@ public class ScaffolderTest {
   @Test
   @Ignore
   public void testSimpleGenerateWithCustomDomainWithMultipleLCWithNewParser() throws Exception {
-    System.setProperty(ParserV2Utils.PARSER_V2_PROPERTY, "true");
     testSimpleGenerateWithCustomDomainWithMultipleLC();
   }
 
@@ -352,7 +343,6 @@ public class ScaffolderTest {
   @Test
   @Ignore
   public void testSimpleGenerateWithEmptyDomainWithNewParser() throws Exception {
-    System.setProperty(ParserV2Utils.PARSER_V2_PROPERTY, "true");
     testSimpleGenerateWithEmptyDomain();
   }
 
@@ -377,7 +367,6 @@ public class ScaffolderTest {
   @Test
   @Ignore
   public void testTwoResourceGenerateWithNewParser() throws Exception {
-    System.setProperty(ParserV2Utils.PARSER_V2_PROPERTY, "true");
     testTwoResourceGenerate();
   }
 
@@ -405,7 +394,6 @@ public class ScaffolderTest {
   @Test
   @Ignore
   public void testNestedGenerateWithNewParser() throws Exception {
-    System.setProperty(ParserV2Utils.PARSER_V2_PROPERTY, "true");
     testNestedGenerate();
   }
 
@@ -430,7 +418,6 @@ public class ScaffolderTest {
   @Test
   @Ignore
   public void testNoNameGenerateWithNewParser() throws Exception {
-    System.setProperty(ParserV2Utils.PARSER_V2_PROPERTY, "true");
     testNoNameGenerate();
   }
 
@@ -452,7 +439,6 @@ public class ScaffolderTest {
   @Test
   @Ignore
   public void testExampleGenerateWithNewParser() throws Exception {
-    System.setProperty(ParserV2Utils.PARSER_V2_PROPERTY, "true");
     testExampleGenerate();
   }
 
@@ -475,7 +461,6 @@ public class ScaffolderTest {
   @Test
   @Ignore
   public void doubleRootRamlWithNewParser() throws Exception {
-    System.setProperty(ParserV2Utils.PARSER_V2_PROPERTY, "true");
     doubleRootRaml();
   }
 
@@ -573,10 +558,5 @@ public class ScaffolderTest {
     scaffolder.run();
 
     return muleXmlOut;
-  }
-
-  @After
-  public void after() {
-    System.clearProperty(ParserV2Utils.PARSER_V2_PROPERTY);
   }
 }

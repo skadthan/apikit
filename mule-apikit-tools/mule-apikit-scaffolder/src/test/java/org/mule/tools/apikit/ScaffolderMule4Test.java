@@ -16,7 +16,7 @@ import static org.mule.tools.apikit.Scaffolder.DEFAULT_MULE_VERSION;
 import static org.mule.tools.apikit.Scaffolder.DEFAULT_RUNTIME_EDITION;
 import static org.mule.tools.apikit.model.RuntimeEdition.EE;
 
-import org.mule.raml.implv2.ParserV2Utils;
+import org.junit.Ignore;
 import org.mule.tools.apikit.misc.FileListUtils;
 
 import java.io.File;
@@ -62,7 +62,7 @@ public class ScaffolderMule4Test {
     folder.newFolder("custom-domain-multiple-lc-4");
   }
 
-  @Test
+  @Ignore(value = "RAML 0.8 not supported")
   public void testSimpleGenerateV08() throws Exception {
     testSimpleGenerate("simple");
   }
@@ -72,7 +72,7 @@ public class ScaffolderMule4Test {
     testSimpleGenerate("simpleV10");
   }
 
-  @Test
+  @Ignore(value = "RAML 0.8 not supported")
   public void testSimpleGenerateForCEV08() throws Exception {
     testSimpleGenerateForCE("simple");
   }
@@ -156,12 +156,7 @@ public class ScaffolderMule4Test {
     assertEquals(2, countOccurences(s, "<logger level=\"INFO\" message="));
   }
 
-  @Test
-  public void testSimpleGenerateWithExtensionWithOldParser() throws Exception {
-    testSimpleGenerateWithExtension();
-  }
-
-  @Test
+  @Ignore(value = "RAML 0.8 not supported")
   public void generateWithIncludes08() throws Exception {
     String filepath = ScaffolderTest.class.getClassLoader().getResource("scaffolder-include-08/api.raml").getFile();
     File file = new File(filepath);
@@ -221,13 +216,12 @@ public class ScaffolderMule4Test {
 
   @Test
   public void testSimpleGenerateWithExtensionWithNewParser() throws Exception {
-    System.setProperty(ParserV2Utils.PARSER_V2_PROPERTY, "true");
     testSimpleGenerateWithExtension();
   }
 
   public void testSimpleGenerateWithExtension() throws Exception {
-    File muleXmlFolderOut = simpleGenerationWithExtensionEnabled("simple", "simple", null);
-    File xmlOut = new File(muleXmlFolderOut, "simple.xml");
+    File muleXmlFolderOut = simpleGenerationWithExtensionEnabled("simpleV10", "simpleV10", null);
+    File xmlOut = new File(muleXmlFolderOut, "simpleV10.xml");
     assertTrue(xmlOut.exists());
     String s = IOUtils.toString(new FileInputStream(xmlOut));
     assertEquals(2, countOccurences(s, "http:response statusCode=\"#[vars.httpStatus default 200]\""));
@@ -241,8 +235,8 @@ public class ScaffolderMule4Test {
     assertEquals(2, countOccurences(s, "#[payload]"));
     assertEquals(1, countOccurences(s, "<http:listener-config"));
     assertEquals(0, countOccurences(s, "interpretRequestErrors=\"true\""));
-    assertEquals(2, countOccurences(s, "get:\\:simple-config"));
-    assertEquals(2, countOccurences(s, "get:\\pet:simple-config"));
+    assertEquals(2, countOccurences(s, "get:\\:simpleV10-config"));
+    assertEquals(2, countOccurences(s, "get:\\pet:simpleV10-config"));
     assertEquals(1, countOccurences(s, "extensionEnabled"));
     assertEquals(1, countOccurences(s, "<apikit:console"));
     assertEquals(0, countOccurences(s, "consoleEnabled=\"false\""));
@@ -250,19 +244,13 @@ public class ScaffolderMule4Test {
   }
 
   @Test
-  public void testSimpleGenerateWithExtensionInNullWithOldParser() throws Exception {
-    testSimpleGenerateWithExtensionInNull();
-  }
-
-  @Test
   public void testSimpleGenerateWithExtensionInNullWithNewParser() throws Exception {
-    System.setProperty(ParserV2Utils.PARSER_V2_PROPERTY, "true");
     testSimpleGenerateWithExtensionInNull();
   }
 
   public void testSimpleGenerateWithExtensionInNull() throws Exception {
-    File muleXmlFolderOut = simpleGenerationWithExtensionEnabled("simple", null, null);
-    File xmlOut = new File(muleXmlFolderOut, "simple.xml");
+    File muleXmlFolderOut = simpleGenerationWithExtensionEnabled("simpleV10", null, null);
+    File xmlOut = new File(muleXmlFolderOut, "simpleV10.xml");
     assertTrue(xmlOut.exists());
     String s = IOUtils.toString(new FileInputStream(xmlOut));
     assertEquals(2, countOccurences(s, "http:response statusCode=\"#[vars.httpStatus default 200]\""));
@@ -276,8 +264,8 @@ public class ScaffolderMule4Test {
     assertEquals(2, countOccurences(s, "#[payload]"));
     assertEquals(1, countOccurences(s, "<http:listener-config"));
     assertEquals(0, countOccurences(s, "interpretRequestErrors=\"true\""));
-    assertEquals(2, countOccurences(s, "get:\\:simple-config"));
-    assertEquals(2, countOccurences(s, "get:\\pet:simple-config"));
+    assertEquals(2, countOccurences(s, "get:\\:simpleV10-config"));
+    assertEquals(2, countOccurences(s, "get:\\pet:simpleV10-config"));
     assertEquals(0, countOccurences(s, "extensionEnabled"));
     assertEquals(1, countOccurences(s, "<apikit:console"));
     assertEquals(0, countOccurences(s, "consoleEnabled=\"false\""));
@@ -285,19 +273,13 @@ public class ScaffolderMule4Test {
   }
 
   @Test
-  public void testSimpleGenerateWithListenerAndExtensionWithOldParser() throws Exception {
-    testSimpleGenerateWithListenerAndExtension();
-  }
-
-  @Test
   public void testSimpleGenerateWithListenerAndExtensionWithNewParser() throws Exception {
-    System.setProperty(ParserV2Utils.PARSER_V2_PROPERTY, "true");
     testSimpleGenerateWithListenerAndExtension();
   }
 
   public void testSimpleGenerateWithListenerAndExtension() throws Exception {
-    File muleXmlFolderOut = simpleGenerationWithExtensionEnabled("simple", "simple", null);
-    File xmlOut = new File(muleXmlFolderOut, "simple.xml");
+    File muleXmlFolderOut = simpleGenerationWithExtensionEnabled("simpleV10", "simpleV10", null);
+    File xmlOut = new File(muleXmlFolderOut, "simpleV10.xml");
     assertTrue(xmlOut.exists());
     String s = IOUtils.toString(new FileInputStream(xmlOut));
     assertEquals(2, countOccurences(s, "http:response statusCode=\"#[vars.httpStatus default 200]\""));
@@ -313,8 +295,8 @@ public class ScaffolderMule4Test {
     assertEquals(1, countOccurences(s, "<http:listener-config"));
     assertEquals(0, countOccurences(s, "interpretRequestErrors=\"true\""));
     assertEquals(0, countOccurences(s, "<http:inbound"));
-    assertEquals(2, countOccurences(s, "get:\\:simple-config"));
-    assertEquals(2, countOccurences(s, "get:\\pet:simple-config"));
+    assertEquals(2, countOccurences(s, "get:\\:simpleV10-config"));
+    assertEquals(2, countOccurences(s, "get:\\pet:simpleV10-config"));
     assertEquals(1, countOccurences(s, "extensionEnabled"));
     assertEquals(1, countOccurences(s, "<apikit:console"));
     assertEquals(0, countOccurences(s, "consoleEnabled=\"false\""));
@@ -322,18 +304,12 @@ public class ScaffolderMule4Test {
   }
 
   @Test
-  public void testSimpleGenerateWithCustomDomainWithOldParser() throws Exception {
-    testSimpleGenerateWithCustomDomain();
-  }
-
-  @Test
   public void testSimpleGenerateWithCustomDomainWithNewParser() throws Exception {
-    System.setProperty(ParserV2Utils.PARSER_V2_PROPERTY, "true");
     testSimpleGenerateWithCustomDomain();
   }
 
   public void testSimpleGenerateWithCustomDomain() throws Exception {
-    File muleXmlSimple = simpleGeneration("simple", "custom-domain-4/mule-domain-config.xml");
+    File muleXmlSimple = simpleGeneration("simpleV10", "custom-domain-4/mule-domain-config.xml");
     assertTrue(muleXmlSimple.exists());
     String s = IOUtils.toString(new FileInputStream(muleXmlSimple));
     assertEquals(0, countOccurences(s, "<http:listener-config"));
@@ -350,8 +326,8 @@ public class ScaffolderMule4Test {
     assertEquals(7, countOccurences(s, "<ee:set-variable"));
     assertEquals(7, countOccurences(s, "<ee:set-payload>"));
     assertEquals(2, countOccurences(s, "config-ref=\"http-lc-0.0.0.0-8081\""));
-    assertEquals(2, countOccurences(s, "get:\\:simple-config"));
-    assertEquals(2, countOccurences(s, "get:\\pet:simple-config"));
+    assertEquals(2, countOccurences(s, "get:\\:simpleV10-config"));
+    assertEquals(2, countOccurences(s, "get:\\pet:simpleV10-config"));
     assertEquals(0, countOccurences(s, "extensionEnabled"));
     assertEquals(1, countOccurences(s, "<apikit:console"));
     assertEquals(0, countOccurences(s, "consoleEnabled=\"false\""));
@@ -359,19 +335,14 @@ public class ScaffolderMule4Test {
   }
 
   @Test
-  public void testSimpleGenerateWithCustomDomainAndExtensionWithOldParser() throws Exception {
-    testSimpleGenerateWithCustomDomainAndExtension();
-  }
-
-  @Test
   public void testSimpleGenerateWithCustomDomainAndExtensionWithNewParser() throws Exception {
-    System.setProperty(ParserV2Utils.PARSER_V2_PROPERTY, "true");
     testSimpleGenerateWithCustomDomainAndExtension();
   }
 
   public void testSimpleGenerateWithCustomDomainAndExtension() throws Exception {
-    File muleXmlFolderOut = simpleGenerationWithExtensionEnabled("simple", "simple", "custom-domain-4/mule-domain-config.xml");
-    File xmlOut = new File(muleXmlFolderOut, "simple.xml");
+    File muleXmlFolderOut =
+        simpleGenerationWithExtensionEnabled("simpleV10", "simpleV10", "custom-domain-4/mule-domain-config.xml");
+    File xmlOut = new File(muleXmlFolderOut, "simpleV10.xml");
     assertTrue(xmlOut.exists());
     String s = IOUtils.toString(new FileInputStream(xmlOut));
     assertEquals(2, countOccurences(s, "http:response statusCode=\"#[vars.httpStatus default 200]\""));
@@ -387,8 +358,8 @@ public class ScaffolderMule4Test {
     assertEquals(0, countOccurences(s, "<http:listener-config"));
     assertEquals(0, countOccurences(s, "interpretRequestErrors=\"true\""));
     assertEquals(2, countOccurences(s, "config-ref=\"http-lc-0.0.0.0-8081\""));
-    assertEquals(2, countOccurences(s, "get:\\:simple-config"));
-    assertEquals(2, countOccurences(s, "get:\\pet:simple-config"));
+    assertEquals(2, countOccurences(s, "get:\\:simpleV10-config"));
+    assertEquals(2, countOccurences(s, "get:\\pet:simpleV10-config"));
     assertEquals(1, countOccurences(s, "extensionEnabled"));
     assertEquals(1, countOccurences(s, "<apikit:console"));
     assertEquals(0, countOccurences(s, "consoleEnabled=\"false\""));
@@ -396,18 +367,12 @@ public class ScaffolderMule4Test {
   }
 
   @Test
-  public void testSimpleGenerateWithCustomDomainWithMultipleLCWithOldParser() throws Exception {
-    testSimpleGenerateWithCustomDomainWithMultipleLC();
-  }
-
-  @Test
   public void testSimpleGenerateWithCustomDomainWithMultipleLCWithNewParser() throws Exception {
-    System.setProperty(ParserV2Utils.PARSER_V2_PROPERTY, "true");
     testSimpleGenerateWithCustomDomainWithMultipleLC();
   }
 
   public void testSimpleGenerateWithCustomDomainWithMultipleLC() throws Exception {
-    File muleXmlSimple = simpleGeneration("simple", "custom-domain-multiple-lc-4/mule-domain-config.xml");
+    File muleXmlSimple = simpleGeneration("simpleV10", "custom-domain-multiple-lc-4/mule-domain-config.xml");
     assertTrue(muleXmlSimple.exists());
     String s = IOUtils.toString(new FileInputStream(muleXmlSimple));
     assertEquals(2, countOccurences(s, "http:response statusCode=\"#[vars.httpStatus default 200]\""));
@@ -423,26 +388,20 @@ public class ScaffolderMule4Test {
     assertEquals(0, countOccurences(s, "<http:listener-config"));
     assertEquals(0, countOccurences(s, "interpretRequestErrors=\"true\""));
     assertEquals(2, countOccurences(s, "config-ref=\"abcd\""));
-    assertEquals(2, countOccurences(s, "get:\\:simple-config"));
-    assertEquals(2, countOccurences(s, "get:\\pet:simple-config"));
+    assertEquals(2, countOccurences(s, "get:\\:simpleV10-config"));
+    assertEquals(2, countOccurences(s, "get:\\pet:simpleV10-config"));
     assertEquals(1, countOccurences(s, "<apikit:console"));
     assertEquals(0, countOccurences(s, "consoleEnabled=\"false\""));
     assertEquals(2, countOccurences(s, "<logger level=\"INFO\" message="));
   }
 
   @Test
-  public void testSimpleGenerateWithEmptyDomainWithOldParser() throws Exception {
-    testSimpleGenerateWithEmptyDomain();
-  }
-
-  @Test
   public void testSimpleGenerateWithEmptyDomainWithNewParser() throws Exception {
-    System.setProperty(ParserV2Utils.PARSER_V2_PROPERTY, "true");
     testSimpleGenerateWithEmptyDomain();
   }
 
   public void testSimpleGenerateWithEmptyDomain() throws Exception {
-    File muleXmlSimple = simpleGeneration("simple", "empty-domain/mule-domain-config.xml");
+    File muleXmlSimple = simpleGeneration("simpleV10", "empty-domain/mule-domain-config.xml");
     assertTrue(muleXmlSimple.exists());
     String s = IOUtils.toString(new FileInputStream(muleXmlSimple));
     assertEquals(2, countOccurences(s, "http:response statusCode=\"#[vars.httpStatus default 200]\""));
@@ -457,21 +416,15 @@ public class ScaffolderMule4Test {
     assertEquals(7, countOccurences(s, "<ee:set-payload>"));
     assertEquals(1, countOccurences(s, "<http:listener-config"));
     assertEquals(0, countOccurences(s, "interpretRequestErrors=\"true\""));
-    assertEquals(2, countOccurences(s, "get:\\:simple-config"));
-    assertEquals(2, countOccurences(s, "get:\\pet:simple-config"));
+    assertEquals(2, countOccurences(s, "get:\\:simpleV10-config"));
+    assertEquals(2, countOccurences(s, "get:\\pet:simpleV10-config"));
     assertEquals(1, countOccurences(s, "<apikit:console"));
     assertEquals(0, countOccurences(s, "consoleEnabled=\"false\""));
     assertEquals(2, countOccurences(s, "<logger level=\"INFO\" message="));
   }
 
   @Test
-  public void testTwoResourceGenerateWithOldParser() throws Exception {
-    testTwoResourceGenerate();
-  }
-
-  @Test
   public void testTwoResourceGenerateWithNewParser() throws Exception {
-    System.setProperty(ParserV2Utils.PARSER_V2_PROPERTY, "true");
     testTwoResourceGenerate();
   }
 
@@ -504,13 +457,7 @@ public class ScaffolderMule4Test {
   }
 
   @Test
-  public void testNestedGenerateWithOldParser() throws Exception {
-    testNestedGenerate();
-  }
-
-  @Test
   public void testNestedGenerateWithNewParser() throws Exception {
-    System.setProperty(ParserV2Utils.PARSER_V2_PROPERTY, "true");
     testNestedGenerate();
   }
 
@@ -556,13 +503,7 @@ public class ScaffolderMule4Test {
   }
 
   @Test
-  public void testNoNameGenerateWithOldParser() throws Exception {
-    testNoNameGenerate();
-  }
-
-  @Test
   public void testNoNameGenerateWithNewParser() throws Exception {
-    System.setProperty(ParserV2Utils.PARSER_V2_PROPERTY, "true");
     testNoNameGenerate();
   }
 
@@ -584,13 +525,7 @@ public class ScaffolderMule4Test {
   }
 
   @Test
-  public void testExampleGenerateWithOldParser() throws Exception {
-    testExampleGenerate();
-  }
-
-  @Test
   public void testExampleGenerateWithNewParser() throws Exception {
-    System.setProperty(ParserV2Utils.PARSER_V2_PROPERTY, "true");
     testExampleGenerate();
   }
 
@@ -677,13 +612,7 @@ public class ScaffolderMule4Test {
   }
 
   @Test
-  public void doubleRootRamlWithOldParser() throws Exception {
-    doubleRootRaml();
-  }
-
-  @Test
   public void doubleRootRamlWithNewParser() throws Exception {
-    System.setProperty(ParserV2Utils.PARSER_V2_PROPERTY, "true");
     doubleRootRaml();
   }
 
@@ -734,7 +663,7 @@ public class ScaffolderMule4Test {
 
   }
 
-  @Test
+  @Ignore(value = "Exchange Modules dependency management is not supported")
   public void testGenerateWithExchangeModules() throws Exception {
     File muleXmlSimple = simpleGeneration("scaffolder-exchange", "api", null, DEFAULT_MULE_VERSION, EE);
     assertTrue(muleXmlSimple.exists());
@@ -839,11 +768,6 @@ public class ScaffolderMule4Test {
     scaffolder.run();
 
     return muleXmlOut;
-  }
-
-  @After
-  public void after() {
-    System.clearProperty(ParserV2Utils.PARSER_V2_PROPERTY);
   }
 }
 

@@ -6,49 +6,51 @@
  */
 package org.mule.tools.apikit.output;
 
-import org.mule.raml.interfaces.model.IAction;
-import org.mule.raml.interfaces.model.IMimeType;
-import org.mule.raml.interfaces.model.IResource;
-import org.mule.raml.interfaces.model.IResponse;
+import amf.model.EndPoint;
+import amf.model.Example;
+import amf.model.Operation;
+import amf.model.Payload;
+import amf.model.Response;
 import org.mule.tools.apikit.model.API;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Nonnull;
+import java.util.Optional;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.mule.apikit.common.FlowName;
+import org.mule.tools.apikit.model.HttpMethod;
 
 import static org.mule.apikit.common.FlowName.FLOW_NAME_SEPARATOR;
 
 public class GenerationModel implements Comparable<GenerationModel> {
 
   private final String verb;
-  private IAction action;
-  private IResource resource;
+  private Operation operation;
+  private EndPoint endpoint;
   private String mimeType;
   private List<String> splitPath;
   private API api;
 
-  public GenerationModel(API api, IResource resource, IAction action) {
-    this(api, resource, action, null);
+  public GenerationModel(API api, EndPoint endpoint, Operation operation) {
+    this(api, endpoint, operation, null);
   }
 
-  public GenerationModel(API api, IResource resource, IAction action, String mimeType) {
+  public GenerationModel(API api, EndPoint endpoint, Operation operation, String mimeType) {
     this.api = api;
     Validate.notNull(api);
-    Validate.notNull(action);
-    Validate.notNull(action.getType());
-    Validate.notNull(resource.getUri());
+    Validate.notNull(operation);
+    Validate.notNull(operation.method());
+    Validate.notNull(endpoint.path());
 
-    this.resource = resource;
-    this.action = action;
-    this.splitPath = new ArrayList<>(Arrays.asList(this.resource.getUri().split("/")));
-    this.verb = action.getType().toString();
+    this.endpoint = endpoint;
+    this.operation = operation;
+    this.splitPath = new ArrayList<>(Arrays.asList(this.endpoint.path().split("/")));
+    this.verb = operation.method();
     this.mimeType = mimeType;
     if (!splitPath.isEmpty()) {
       splitPath.remove(0);
@@ -61,78 +63,81 @@ public class GenerationModel implements Comparable<GenerationModel> {
   }
 
   public String getStringFromActionType() {
-    switch (action.getType()) {
-      case GET:
-        return "retrieve";
-      case POST:
-        return "update";
-      case PUT:
-        return "create";
-      case DELETE:
-        return "delete";
-      default:
-        return action.getType().toString().toLowerCase();
+    final String method = operation.method().toLowerCase();
+    try {
+      switch (HttpMethod.valueOf(method.toUpperCase())) {
+        case GET:
+          return "retrieve";
+        case POST:
+          return "update";
+        case PUT:
+          return "create";
+        case DELETE:
+          return "delete";
+      }
+    } catch (IllegalArgumentException ignored) {
     }
+
+    return method;
   }
 
-  //public String getExample() {
-  //   return this.getExampleWrapper();
-
-  //if (exampleWrapper != null) {
-  //    return exampleWrapper;
-  //}
-  //else
-  //{
-  //    return DEFAULT_TEXT_MULE_4;
-  //}
-
-  //}
-
   public String getExampleWrapper() {
-    Map<String, IResponse> responses = action.getResponses();
+    final List<Response> responses = operation.responses();
 
-    IResponse response = responses.get("200");
-
-    if (response == null || response.getBody() == null) {
-      for (IResponse response1 : responses.values()) {
-        if (response1.getBody() != null) {
-          Map<String, IMimeType> responseBody1 = response1.getBody();
-          IMimeType mimeType = responseBody1.get("application/json");
-          if (mimeType != null && mimeType.getExample() != null) {
-            return mimeType.getExample();
-          } else {
-            for (IMimeType type : responseBody1.values()) {
-              if (type.getExample() != null) {
-                return type.getExample();
-              }
-            }
-          }
-        }
-      }
+    // Looking for an example in ok responses
+    final Optional<Response> response = findFirst(responses, GenerationModel::isOkResponse);
+    if (response.isPresent()) {
+      final Optional<String> okExample = getResponseExample(response.get());
+      if (okExample.isPresent())
+        return okExample.get();
     }
 
-    if (response != null && response.getBody() != null) {
-      Map<String, IMimeType> body = response.getBody();
-      IMimeType mimeType = body.get("application/json");
-      if (mimeType != null && mimeType.getExample() != null) {
-        return mimeType.getExample();
-      }
-
-      for (IMimeType mimeType2 : response.getBody().values()) {
-        if (mimeType2 != null && mimeType2.getExample() != null) {
-          return mimeType2.getExample();
-        }
-      }
+    // Looking for an example in all responses
+    for (Response errorResponse : operation.responses()) {
+      final Optional<String> nonOkExample = getResponseExample(errorResponse);
+      if (nonOkExample.isPresent())
+        return nonOkExample.get();
     }
 
     return null;
 
   }
 
+  private Optional<String> getResponseExample(Response response) {
+    final List<Payload> payloadWithExamples = getPayloadWithExamples(response);
+    final Optional<Example> jsonExample = findFirst(payloadWithExamples, p -> "application/json".equals(p.mediaType()))
+        .flatMap(p -> first(p.schema().examples()));
+
+    if (jsonExample.isPresent())
+      return jsonExample.map(Example::value);
+
+    return first(payloadWithExamples).flatMap(p -> first(p.schema().examples())).map(Example::value);
+  }
+
+  private List<Payload> getPayloadWithExamples(Response rs) {
+    return filter(rs.payloads(), p -> !p.schema().examples().isEmpty());
+  }
+
+  private static boolean isOkResponse(Response response) {
+    return "200".equals(response.statusCode());
+  }
+
+  private static <T> Optional<T> findFirst(List<T> list, Predicate<T> predicate) {
+    return list.stream().filter(predicate).findFirst();
+  }
+
+  private static <T> Optional<T> first(List<T> list) {
+    return list.stream().findFirst();
+  }
+
+  private static <T> List<T> filter(List<T> list, Predicate<T> predicate) {
+    return list.stream().filter(predicate).collect(Collectors.toList());
+  }
+
   public String getName() {
     StringBuilder name = new StringBuilder();
     name.append(this.getStringFromActionType());
-    String resourceName = this.resource.getDisplayName();
+    String resourceName = this.endpoint.name();
 
     if (resourceName == null) {
       StringBuffer buff = new StringBuffer();
@@ -164,12 +169,14 @@ public class GenerationModel implements Comparable<GenerationModel> {
   }
 
   public String getContentType() {
-    if (action.getResponses() != null) {
-      for (String response : action.getResponses().keySet()) {
-        int statusCode = Integer.parseInt(response);
+    final List<Response> responses = operation.responses();
+
+    if (responses != null) {
+      for (Response response : responses) {
+        int statusCode = Integer.parseInt(response.statusCode());
         if (statusCode >= 200 && statusCode < 299) {
-          if (action.getResponses().get(response).getBody() != null && action.getResponses().get(response).getBody().size() > 0) {
-            return (String) action.getResponses().get(response).getBody().keySet().toArray()[0];
+          if (response.payloads() != null && !response.payloads().isEmpty()) {
+            return response.payloads().get(0).mediaType();
           }
         }
       }
@@ -180,9 +187,9 @@ public class GenerationModel implements Comparable<GenerationModel> {
 
   public String getFlowName() {
     StringBuilder flowName = new StringBuilder("");
-    flowName.append(action.getType().toString().toLowerCase())
+    flowName.append(operation.method().toLowerCase())
         .append(FLOW_NAME_SEPARATOR)
-        .append(resource.getUri());
+        .append(endpoint.path());
 
     if (mimeType != null) {
       flowName.append(FLOW_NAME_SEPARATOR)
@@ -198,7 +205,7 @@ public class GenerationModel implements Comparable<GenerationModel> {
   }
 
   @Override
-  public int compareTo(@Nonnull GenerationModel generationModel) {
+  public int compareTo(GenerationModel generationModel) {
     return this.getName().compareTo(generationModel.getName());
   }
 }

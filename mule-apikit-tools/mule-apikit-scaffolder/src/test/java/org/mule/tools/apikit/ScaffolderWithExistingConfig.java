@@ -13,7 +13,7 @@ import static org.mule.tools.apikit.Helper.countOccurences;
 import static org.mule.tools.apikit.Scaffolder.DEFAULT_MULE_VERSION;
 import static org.mule.tools.apikit.Scaffolder.DEFAULT_RUNTIME_EDITION;
 
-import org.mule.raml.implv2.ParserV2Utils;
+import org.junit.Ignore;
 import org.mule.tools.apikit.misc.FileListUtils;
 
 import java.io.File;
@@ -51,18 +51,12 @@ public class ScaffolderWithExistingConfig {
     folder.newFolder("custom-domain");
   }
 
-  @Test
-  public void testAlreadyExistsWithExtensionEnabledWithOldParser() throws Exception {
-    testAlreadyExistsWithExtensionEnabled();
-  }
-
-  @Test
+  @Ignore(value = "RAML 0.8 not supported")
   public void testAlreadyExistsWithExtensionEnabledWithNewParser() throws Exception {
-    System.setProperty(ParserV2Utils.PARSER_V2_PROPERTY, "true");
     testAlreadyExistsWithExtensionEnabled();
   }
 
-  @Test
+  @Ignore(value = "RAML 0.8 not supported")
   public void testAlreadyExistsWithExtensionEnabled() throws Exception {
     List<File> ramls = Arrays.asList(getFile("scaffolder-existing-extension/simple.raml"));
     File xmlFile = getFile("scaffolder-existing-extension/simple-extension-enabled.xml");
@@ -85,14 +79,8 @@ public class ScaffolderWithExistingConfig {
     assertEquals(1, countOccurences(s, "<logger level=\"INFO\" message="));
   }
 
-  @Test
-  public void testAlreadyExistsOldGenerateWithOldParser() throws Exception {
-    testAlreadyExistsOldGenerate();
-  }
-
-  @Test
+  @Ignore(value = "RAML 0.8 not supported")
   public void testAlreadyExistsOldGenerateWithNewParser() throws Exception {
-    System.setProperty(ParserV2Utils.PARSER_V2_PROPERTY, "true");
     testAlreadyExistsOldGenerate();
   }
 
@@ -117,18 +105,12 @@ public class ScaffolderWithExistingConfig {
   }
 
 
-  @Test
-  public void testAlreadyExistsOldWithAddressGenerateWithOldParser() throws Exception {
-    testAlreadyExistsOldWithAddressGenerate();
-  }
-
-  @Test
+  @Ignore(value = "RAML 0.8 not supported")
   public void testAlreadyExistsOldWithAddressGenerateWithNewParser() throws Exception {
-    System.setProperty(ParserV2Utils.PARSER_V2_PROPERTY, "true");
     testAlreadyExistsOldWithAddressGenerate();
   }
 
-  @Test
+  @Ignore(value = "RAML 0.8 not supported")
   public void testAlreadyExistsOldWithAddressGenerate() throws Exception {
     List<File> ramls = Arrays.asList(getFile("scaffolder-existing-old-address/complex.raml"));
     File xmlFile = getFile("scaffolder-existing-old-address/complex.xml");
@@ -168,14 +150,8 @@ public class ScaffolderWithExistingConfig {
     assertEquals(15, countOccurences(s, "<logger level=\"INFO\" message="));
   }
 
-  @Test
-  public void testMultipleMimeTypesWithOldParser() throws Exception {
-    testMultipleMimeTypes("multipleMimeTypes");
-  }
-
-  @Test
+  @Ignore(value = "RAML 0.8 not supported")
   public void testMultipleMimeTypesWithNewParser() throws Exception {
-    System.setProperty(ParserV2Utils.PARSER_V2_PROPERTY, "true");
     testMultipleMimeTypes("multipleMimeTypes");
   }
 
@@ -241,8 +217,4 @@ public class ScaffolderWithExistingConfig {
     return fileListUtils.toStreamFromFiles(ramls);
   }
 
-  @After
-  public void after() {
-    System.clearProperty(ParserV2Utils.PARSER_V2_PROPERTY);
-  }
 }

@@ -11,7 +11,9 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -30,17 +32,17 @@ import org.mule.tools.apikit.output.GenerationModel;
 public class RAMLFilesParserTest {
 
   @Test
-  public void testCreation() {
-    final InputStream resourceAsStream =
-        RAMLFilesParserTest.class.getClassLoader().getResourceAsStream(
-                                                                       "scaffolder/simple.raml");
+  public void testCreation() throws IOException {
+    final URL resource =
+        RAMLFilesParserTest.class.getClassLoader().getResource("scaffolder/simpleV10.raml");
+
     Log log = mock(Log.class);
 
     HashSet<File> ramlPaths = new HashSet<File>();
     ramlPaths.add(new File("leagues.raml"));
 
-    HashMap<File, InputStream> streams = new HashMap<File, InputStream>();
-    streams.put(new File("hello"), resourceAsStream);
+    HashMap<File, InputStream> streams = new HashMap<>();
+    streams.put(new File(resource.getPath()), resource.openStream());
 
     RAMLFilesParser ramlFilesParser = new RAMLFilesParser(log, streams, new APIFactory());
 
@@ -59,7 +61,7 @@ public class RAMLFilesParserTest {
     Assert.assertEquals("0.0.0.0", triplet.getApi().getHttpListenerConfig().getHost());
     Assert.assertEquals("8081", triplet.getApi().getHttpListenerConfig().getPort());
     Assert.assertEquals("/", triplet.getApi().getHttpListenerConfig().getBasePath());
-    Assert.assertEquals("hello-httpListenerConfig", triplet.getApi().getHttpListenerConfig().getName());
+    Assert.assertEquals("simpleV10-httpListenerConfig", triplet.getApi().getHttpListenerConfig().getName());
     ResourceActionMimeTypeTriplet triplet2 = (ResourceActionMimeTypeTriplet) CollectionUtils.find(ramlEntries, new Predicate() {
 
       @Override
@@ -72,15 +74,14 @@ public class RAMLFilesParserTest {
     Assert.assertEquals("0.0.0.0", triplet2.getApi().getHttpListenerConfig().getHost());
     Assert.assertEquals("8081", triplet2.getApi().getHttpListenerConfig().getPort());
     Assert.assertEquals("/", triplet2.getApi().getHttpListenerConfig().getBasePath());
-    Assert.assertEquals("hello-httpListenerConfig", triplet2.getApi().getHttpListenerConfig().getName());
+    Assert.assertEquals("simpleV10-httpListenerConfig", triplet2.getApi().getHttpListenerConfig().getName());
 
   }
 
   @Test
-  public void apiWithWarningsShouldBeValid() {
-    final InputStream resourceAsStream =
-        RAMLFilesParserTest.class.getClassLoader().getResourceAsStream(
-                                                                       "scaffolder/apiWithWarnings.raml");
+  public void apiWithWarningsShouldBeValid() throws IOException {
+    final URL resource =
+        RAMLFilesParserTest.class.getClassLoader().getResource("scaffolder/apiWithWarnings.raml");
 
     Log log = mock(Log.class);
 
@@ -88,7 +89,7 @@ public class RAMLFilesParserTest {
     ramlPaths.add(new File("leagues.raml"));
 
     HashMap<File, InputStream> streams = new HashMap<File, InputStream>();
-    streams.put(new File("hello"), resourceAsStream);
+    streams.put(new File(resource.getPath()), resource.openStream());
 
     RAMLFilesParser ramlFilesParser = new RAMLFilesParser(log, streams, new APIFactory());
 

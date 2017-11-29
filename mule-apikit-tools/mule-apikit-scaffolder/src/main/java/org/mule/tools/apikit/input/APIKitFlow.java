@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.regex.Matcher;
 
 import org.mule.apikit.common.FlowName;
-import org.mule.raml.interfaces.common.RamlUtils;
+import org.mule.tools.apikit.model.HttpMethod;
 
 public class APIKitFlow {
 
@@ -47,7 +47,7 @@ public class APIKitFlow {
     final Matcher matcher = FlowName.getMatcher(name);
 
     final String action = FlowName.getAction(matcher);
-    if (!RamlUtils.isValidAction(action)) {
+    if (!HttpMethod.isValidAction(action)) {
       throw new IllegalArgumentException(action + " is not a valid action type");
     }
 

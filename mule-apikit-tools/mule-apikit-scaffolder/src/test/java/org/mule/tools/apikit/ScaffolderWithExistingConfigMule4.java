@@ -13,7 +13,6 @@ import static org.mule.tools.apikit.Helper.countOccurences;
 import static org.mule.tools.apikit.Scaffolder.DEFAULT_MULE_VERSION;
 import static org.mule.tools.apikit.Scaffolder.DEFAULT_RUNTIME_EDITION;
 
-import org.mule.raml.implv2.ParserV2Utils;
 import org.mule.tools.apikit.misc.FileListUtils;
 
 import java.io.File;
@@ -59,13 +58,7 @@ public class ScaffolderWithExistingConfigMule4 {
   }
 
   @Test
-  public void testAlreadyExistsWithExtensionDisabledWithOldParser() throws Exception {
-    testAlreadyExistsWithExtensionDisabled();
-  }
-
-  @Test
   public void testAlreadyExistsWithExtensionDisabledWithNewParser() throws Exception {
-    System.setProperty(ParserV2Utils.PARSER_V2_PROPERTY, "true");
     testAlreadyExistsWithExtensionDisabled();
   }
 
@@ -93,13 +86,7 @@ public class ScaffolderWithExistingConfigMule4 {
   }
 
   @Test
-  public void testAlreadyExistsWithExtensionEnabledWithOldParser() throws Exception {
-    testAlreadyExistsWithExtensionEnabled();
-  }
-
-  @Test
   public void testAlreadyExistsWithExtensionEnabledWithNewParser() throws Exception {
-    System.setProperty(ParserV2Utils.PARSER_V2_PROPERTY, "true");
     testAlreadyExistsWithExtensionEnabled();
   }
 
@@ -128,13 +115,7 @@ public class ScaffolderWithExistingConfigMule4 {
   }
 
   @Test
-  public void testAlreadyExistsWithExtensionNotPresentWithOldParser() throws Exception {
-    testAlreadyExistsWithExtensionNotPresent();
-  }
-
-  @Test
   public void testAlreadyExistsWithExtensionNotPresentWithNewParser() throws Exception {
-    System.setProperty(ParserV2Utils.PARSER_V2_PROPERTY, "true");
     testAlreadyExistsWithExtensionNotPresent();
   }
 
@@ -163,13 +144,7 @@ public class ScaffolderWithExistingConfigMule4 {
   }
 
   @Test
-  public void testAlreadyExistsGenerateWithOldParser() throws Exception {
-    testAlreadyExistsGenerate();
-  }
-
-  @Test
   public void testAlreadyExistsGenerateWithNewParser() throws Exception {
-    System.setProperty(ParserV2Utils.PARSER_V2_PROPERTY, "true");
     testAlreadyExistsGenerate();
   }
 
@@ -197,13 +172,7 @@ public class ScaffolderWithExistingConfigMule4 {
   }
 
   @Test
-  public void testAlreadyExistsGenerateWithCustomDomainWithOldParser() throws Exception {
-    testAlreadyExistsGenerateWithCustomDomain();
-  }
-
-  @Test
   public void testAlreadyExistsGenerateWithCustomDomainWithNewParser() throws Exception {
-    System.setProperty(ParserV2Utils.PARSER_V2_PROPERTY, "true");
     testAlreadyExistsGenerateWithCustomDomain();
   }
 
@@ -233,13 +202,7 @@ public class ScaffolderWithExistingConfigMule4 {
   }
 
   @Test
-  public void testAlreadyExistsGenerateWithCustomAndNormalLCWithOldParser() throws Exception {
-    testAlreadyExistsGenerateWithCustomAndNormalLC();
-  }
-
-  @Test
   public void testAlreadyExistsGenerateWithCustomAndNormalLCWithNewParser() throws Exception {
-    System.setProperty(ParserV2Utils.PARSER_V2_PROPERTY, "true");
     testAlreadyExistsGenerateWithCustomAndNormalLC();
   }
 
@@ -268,13 +231,7 @@ public class ScaffolderWithExistingConfigMule4 {
   }
 
   @Test
-  public void testAlreadyExistingMuleConfigWithApikitRouterWithOldParser() throws Exception {
-    testAlreadyExistingMuleConfigWithApikitRouter();
-  }
-
-  @Test
   public void testAlreadyExistingMuleConfigWithApikitRouterWithNewParser() throws Exception {
-    System.setProperty(ParserV2Utils.PARSER_V2_PROPERTY, "true");
     testAlreadyExistingMuleConfigWithApikitRouter();
   }
 
@@ -304,13 +261,7 @@ public class ScaffolderWithExistingConfigMule4 {
   }
 
   @Test
-  public void testMultipleMimeTypesWithoutNamedConfigWithOldParser() throws Exception {
-    testMultipleMimeTypesWithoutNamedConfig();
-  }
-
-  @Test
   public void testMultipleMimeTypesWithoutNamedConfigWithNewParser() throws Exception {
-    System.setProperty(ParserV2Utils.PARSER_V2_PROPERTY, "true");
     testMultipleMimeTypesWithoutNamedConfig();
   }
 
@@ -338,13 +289,7 @@ public class ScaffolderWithExistingConfigMule4 {
   }
 
   @Test
-  public void testMultipleMimeTypesWithOldParser() throws Exception {
-    testMultipleMimeTypes("multipleMimeTypes");
-  }
-
-  @Test
   public void testMultipleMimeTypesWithNewParser() throws Exception {
-    System.setProperty(ParserV2Utils.PARSER_V2_PROPERTY, "true");
     testMultipleMimeTypes("multipleMimeTypes");
   }
 
@@ -410,8 +355,4 @@ public class ScaffolderWithExistingConfigMule4 {
     return fileListUtils.toStreamFromFiles(ramls);
   }
 
-  @After
-  public void after() {
-    System.clearProperty(ParserV2Utils.PARSER_V2_PROPERTY);
-  }
 }

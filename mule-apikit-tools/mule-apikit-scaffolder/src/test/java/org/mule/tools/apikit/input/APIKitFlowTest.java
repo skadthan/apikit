@@ -7,7 +7,7 @@
 package org.mule.tools.apikit.input;
 
 import static org.junit.Assert.assertEquals;
-import static org.mule.raml.interfaces.model.IActionType.GET;
+import static org.mule.tools.apikit.model.HttpMethod.GET;
 
 import java.util.Arrays;
 
@@ -26,17 +26,17 @@ public class APIKitFlowTest {
   @Test
   public void testAPIKitFlowName() {
     APIKitFlow flow =
-        APIKitFlow.buildFromName(buildName(GET.toString(), RESOURCE, null, CONFIG_REF), Arrays.asList(new String[] {CONFIG_REF}));
-    assertEquals(GET.toString().toLowerCase(), flow.getAction());
+        APIKitFlow.buildFromName(buildName(GET.getName(), RESOURCE, null, CONFIG_REF), Arrays.asList(new String[] {CONFIG_REF}));
+    assertEquals(GET.getName().toLowerCase(), flow.getAction());
     assertEquals(RESOURCE, flow.getResource());
     assertEquals(CONFIG_REF, flow.getConfigRef());
   }
 
   @Test
   public void testAPIKitFlowNameWithContentType() {
-    APIKitFlow flow = APIKitFlow.buildFromName(buildName(GET.toString(), RESOURCE, MIME_TYPE, CONFIG_REF),
+    APIKitFlow flow = APIKitFlow.buildFromName(buildName(GET.getName(), RESOURCE, MIME_TYPE, CONFIG_REF),
                                                Arrays.asList(new String[] {CONFIG_REF}));
-    assertEquals(GET.toString().toLowerCase(), flow.getAction());
+    assertEquals(GET.getName().toLowerCase(), flow.getAction());
     assertEquals(RESOURCE, flow.getResource());
     assertEquals(MIME_TYPE, flow.getMimeType());
     assertEquals(CONFIG_REF, flow.getConfigRef());
@@ -45,8 +45,8 @@ public class APIKitFlowTest {
   @Test
   public void testAPIKitFlowNameWithContentTypeNoConfigRef() {
     APIKitFlow flow =
-        APIKitFlow.buildFromName(buildName(GET.toString(), RESOURCE, MIME_TYPE, null), Arrays.asList(new String[] {CONFIG_REF}));
-    assertEquals(GET.toString().toLowerCase(), flow.getAction());
+        APIKitFlow.buildFromName(buildName(GET.getName(), RESOURCE, MIME_TYPE, null), Arrays.asList(new String[] {CONFIG_REF}));
+    assertEquals(GET.getName().toLowerCase(), flow.getAction());
     assertEquals(RESOURCE, flow.getResource());
     assertEquals(MIME_TYPE, flow.getMimeType());
     assertEquals(APIKitFlow.UNNAMED_CONFIG_NAME, flow.getConfigRef());
@@ -59,19 +59,19 @@ public class APIKitFlowTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void APIKitFlowNameInvalidFormat() {
-    APIKitFlow.buildFromName(buildName(GET.toString(), null, null, null), Arrays.asList(new String[] {CONFIG_REF}));
+    APIKitFlow.buildFromName(buildName(GET.getName(), null, null, null), Arrays.asList(new String[] {CONFIG_REF}));
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void APIKitFlowNameInvalidResource() {
-    APIKitFlow.buildFromName(buildName(GET.toString(), BAD_RESOURCE, null, CONFIG_REF), Arrays.asList(new String[] {CONFIG_REF}));
+    APIKitFlow.buildFromName(buildName(GET.getName(), BAD_RESOURCE, null, CONFIG_REF), Arrays.asList(new String[] {CONFIG_REF}));
   }
 
   @Test
   public void APIKitFlowNameNoConfigRef() {
     APIKitFlow flow =
-        APIKitFlow.buildFromName(buildName(GET.toString(), RESOURCE, null, null), Arrays.asList(new String[] {CONFIG_REF}));
-    assertEquals(GET.toString().toLowerCase(), flow.getAction());
+        APIKitFlow.buildFromName(buildName(GET.getName(), RESOURCE, null, null), Arrays.asList(new String[] {CONFIG_REF}));
+    assertEquals(GET.getName().toLowerCase(), flow.getAction());
     assertEquals(RESOURCE, flow.getResource());
     assertEquals(APIKitFlow.UNNAMED_CONFIG_NAME, flow.getConfigRef());
   }

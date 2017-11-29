@@ -6,12 +6,16 @@
  */
 package org.mule.tools.apikit.misc;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.mule.weave.v2.runtime.DataWeaveResult;
 import org.mule.weave.v2.runtime.DataWeaveScriptingEngine;
 import org.mule.weave.v2.runtime.ScriptingBindings;
-import org.yaml.snakeyaml.Yaml;
+import org.yaml.model.YDocument;
+import org.yaml.model.YPart;
+import org.yaml.parser.YamlParser;
+import org.yaml.render.JsonRender;
+import scala.collection.IndexedSeq;
 
 import java.io.IOException;
 
@@ -60,16 +64,23 @@ public class ExampleUtils {
   }
 
   private static String transformYamlExampleIntoJSON(String example) {
-    Yaml yaml = new Yaml();
-    Object yamlObject = yaml.load(example);
+    final YamlParser yamlParser = YamlParser.apply(example);
+    final IndexedSeq<YPart> parseSeq = yamlParser.parse(true);
+    final String prettyPrintedJson = JsonRender.render(toDocument(parseSeq));
 
     try {
-      return new ObjectMapper().writeValueAsString(yamlObject);
-
-    } catch (JsonProcessingException e) {
+      return new ObjectMapper().readValue(prettyPrintedJson, JsonNode.class).toString();
+    } catch (IOException e) {
       // If example couldn't have been processed, we return a null JSON.
       return "null";
     }
+  }
+
+  private static YDocument toDocument(IndexedSeq<YPart> parts) {
+    if (parts.exists(v -> v instanceof YDocument)) {
+      return parts.find(v -> v instanceof YDocument).map(c -> (YDocument) c).get();
+    }
+    return null;
   }
 
   public static boolean isValidXML(String payload) {

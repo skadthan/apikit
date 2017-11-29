@@ -7,24 +7,24 @@
 package org.mule.tools.apikit;
 
 
+import static java.util.Collections.singletonList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.mule.raml.interfaces.model.IActionType.DELETE;
-import static org.mule.raml.interfaces.model.IActionType.GET;
-import static org.mule.raml.interfaces.model.IActionType.OPTIONS;
-import static org.mule.raml.interfaces.model.IActionType.POST;
-import static org.mule.raml.interfaces.model.IActionType.PUT;
+import static org.mule.tools.apikit.model.HttpMethod.DELETE;
+import static org.mule.tools.apikit.model.HttpMethod.POST;
+import static org.mule.tools.apikit.model.HttpMethod.PUT;
+import static org.mule.tools.apikit.model.HttpMethod.GET;
 
-import org.mule.raml.interfaces.model.IAction;
-import org.mule.raml.interfaces.model.IMimeType;
-import org.mule.raml.interfaces.model.IResource;
-import org.mule.raml.interfaces.model.IResponse;
+import amf.model.EndPoint;
+import amf.model.Example;
+import amf.model.Operation;
+import amf.model.Payload;
+import amf.model.Response;
+import amf.model.Shape;
 import org.mule.tools.apikit.model.API;
 import org.mule.tools.apikit.output.GenerationModel;
-
-import java.util.HashMap;
 
 import org.junit.Test;
 
@@ -32,138 +32,144 @@ public class GenerationModelTest {
 
   @Test
   public void testGetVerb() throws Exception {
-    IAction action = mock(IAction.class);
-    when(action.getType()).thenReturn(GET);
-    IResource resource = mock(IResource.class);
-    when(resource.getUri()).thenReturn("/api/pet");
+    Operation operation = mock(Operation.class);
+    when(operation.method()).thenReturn(GET.getName());
+    EndPoint endPoint = mock(EndPoint.class);
+    when(endPoint.path()).thenReturn("/api/pet");
     API api = mock(API.class);
-    assertEquals("GET", new GenerationModel(api, resource, action).getVerb());
+    assertEquals("get", new GenerationModel(api, endPoint, operation).getVerb());
   }
 
   @Test
   public void testGetStringFromActionType() throws Exception {
-    IResource resource = mock(IResource.class);
-    when(resource.getUri()).thenReturn("/api/pet");
+    EndPoint resource = mock(EndPoint.class);
+    when(resource.path()).thenReturn("/api/pet");
     API api = mock(API.class);
 
-    IAction action = mock(IAction.class);
-    when(action.getType()).thenReturn(GET);
+    Operation action = mock(Operation.class);
+    when(action.method()).thenReturn(GET.getName());
     assertEquals("retrieve", new GenerationModel(api, resource, action).getStringFromActionType());
 
-    action = mock(IAction.class);
-    when(action.getType()).thenReturn(PUT);
+    action = mock(Operation.class);
+    when(action.method()).thenReturn(PUT.getName());
     assertEquals("create", new GenerationModel(api, resource, action).getStringFromActionType());
 
-    action = mock(IAction.class);
-    when(action.getType()).thenReturn(POST);
+    action = mock(Operation.class);
+    when(action.method()).thenReturn(POST.getName());
     assertEquals("update", new GenerationModel(api, resource, action).getStringFromActionType());
 
-    action = mock(IAction.class);
-    when(action.getType()).thenReturn(DELETE);
+    action = mock(Operation.class);
+    when(action.method()).thenReturn(DELETE.getName());
     assertEquals("delete", new GenerationModel(api, resource, action).getStringFromActionType());
 
-    action = mock(IAction.class);
-    when(action.getType()).thenReturn(OPTIONS);
+    action = mock(Operation.class);
+    when(action.method()).thenReturn("options");
     assertEquals("options", new GenerationModel(api, resource, action).getStringFromActionType());
   }
 
   @Test
   public void testGetExample() throws Exception {
-    IAction action = mock(IAction.class);
-    HashMap<String, IResponse> stringResponseHashMap = new HashMap<>();
-    IResponse response = mock(IResponse.class);
-    HashMap<String, IMimeType> stringMimeTypeHashMap = new HashMap<>();
-    IMimeType mimeType = mock(IMimeType.class);
-    when(mimeType.getExample()).thenReturn("{\n\"hello\": \">world<\"\n}");
-    stringMimeTypeHashMap.put("application/json", mimeType);
-    when(response.getBody()).thenReturn(stringMimeTypeHashMap);
-    stringResponseHashMap.put("200", response);
-    when(action.getResponses()).thenReturn(stringResponseHashMap);
-    when(action.getType()).thenReturn(GET);
-    IResource resource = mock(IResource.class);
-    when(resource.getUri()).thenReturn("/api/pet");
+    Example example = mock(Example.class);
+    when(example.value()).thenReturn("{\n\"hello\": \">world<\"\n}");
+    Shape schema = mock(Shape.class);
+    when(schema.examples()).thenReturn(singletonList(example));
+    Payload payload = mock(Payload.class);
+    when(payload.schema()).thenReturn(schema);
+    when(payload.mediaType()).thenReturn("application/json");
+    Response response = mock(Response.class);
+    when(response.payloads()).thenReturn(singletonList(payload));
+    when(response.statusCode()).thenReturn("200");
+    Operation operation = mock(Operation.class);
+    when(operation.responses()).thenReturn(singletonList(response));
+    when(operation.method()).thenReturn(GET.getName());
+    EndPoint endpoint = mock(EndPoint.class);
+    when(endpoint.path()).thenReturn("/api/pet");
     API api = mock(API.class);
     assertEquals("{\n\"hello\": \">world<\"\n}",
-                 new GenerationModel(api, resource, action).getExampleWrapper());
+                 new GenerationModel(api, endpoint, operation).getExampleWrapper());
   }
 
   @Test
   public void testGetExample200Complex() throws Exception {
-    IAction action = mock(IAction.class);
-    HashMap<String, IResponse> stringResponseHashMap = new HashMap<>();
-    IResponse response = mock(IResponse.class);
-    HashMap<String, IMimeType> stringMimeTypeHashMap = new HashMap<>();
-    IMimeType mimeType = mock(IMimeType.class);
-    when(mimeType.getExample()).thenReturn("<hello>world</hello>");
-    stringMimeTypeHashMap.put("application/xml", mimeType);
-    when(response.getBody()).thenReturn(stringMimeTypeHashMap);
-    stringResponseHashMap.put("200", response);
-    when(action.getResponses()).thenReturn(stringResponseHashMap);
-    when(action.getType()).thenReturn(GET);
-    IResource resource = mock(IResource.class);
-    when(resource.getUri()).thenReturn("/api/pet");
+    Example example = mock(Example.class);
+    when(example.value()).thenReturn("<hello>world</hello>");
+    Shape schema = mock(Shape.class);
+    when(schema.examples()).thenReturn(singletonList(example));
+    Payload payload = mock(Payload.class);
+    when(payload.schema()).thenReturn(schema);
+    when(payload.mediaType()).thenReturn("application/xml");
+    Response response = mock(Response.class);
+    when(response.payloads()).thenReturn(singletonList(payload));
+    when(response.statusCode()).thenReturn("200");
+    Operation operation = mock(Operation.class);
+    when(operation.responses()).thenReturn(singletonList(response));
+    when(operation.method()).thenReturn(GET.getName());
+    EndPoint endpoint = mock(EndPoint.class);
+    when(endpoint.path()).thenReturn("/api/pet");
     API api = mock(API.class);
     assertEquals("<hello>world</hello>",
-                 new GenerationModel(api, resource, action).getExampleWrapper());
+                 new GenerationModel(api, endpoint, operation).getExampleWrapper());
   }
 
   @Test
   public void testGetExampleComplex() throws Exception {
-    IAction action = mock(IAction.class);
-    HashMap<String, IResponse> stringResponseHashMap = new HashMap<>();
-    IResponse response = mock(IResponse.class);
-    HashMap<String, IMimeType> stringMimeTypeHashMap = new HashMap<>();
-    IMimeType mimeType = mock(IMimeType.class);
-    when(mimeType.getExample()).thenReturn("<hello>world</hello>");
-    stringMimeTypeHashMap.put("application/xml", mimeType);
-    when(response.getBody()).thenReturn(stringMimeTypeHashMap);
-    stringResponseHashMap.put("403", response);
-    when(action.getResponses()).thenReturn(stringResponseHashMap);
-    when(action.getType()).thenReturn(GET);
-    IResource resource = mock(IResource.class);
-    when(resource.getUri()).thenReturn("/api/pet");
+    Example example = mock(Example.class);
+    when(example.value()).thenReturn("<hello>world</hello>");
+    Shape schema = mock(Shape.class);
+    when(schema.examples()).thenReturn(singletonList(example));
+    Payload payload = mock(Payload.class);
+    when(payload.schema()).thenReturn(schema);
+    when(payload.mediaType()).thenReturn("application/xml");
+    Response response = mock(Response.class);
+    when(response.payloads()).thenReturn(singletonList(payload));
+    when(response.statusCode()).thenReturn("403");
+    Operation operation = mock(Operation.class);
+    when(operation.responses()).thenReturn(singletonList(response));
+    when(operation.method()).thenReturn(GET.getName());
+    EndPoint endpoint = mock(EndPoint.class);
+    when(endpoint.path()).thenReturn("/api/pet");
     API api = mock(API.class);
     assertEquals("<hello>world</hello>",
-                 new GenerationModel(api, resource, action).getExampleWrapper());
+                 new GenerationModel(api, endpoint, operation).getExampleWrapper());
   }
 
   @Test
   public void testGetExampleNull() throws Exception {
-    IAction action = mock(IAction.class);
-    when(action.getType()).thenReturn(GET);
-    IResource resource = mock(IResource.class);
-    when(resource.getUri()).thenReturn("/api/pet");
+    Operation action = mock(Operation.class);
+    when(action.method()).thenReturn(GET.getName());
+    EndPoint resource = mock(EndPoint.class);
+    when(resource.path()).thenReturn("/api/pet");
     API api = mock(API.class);
     assertEquals(null, new GenerationModel(api, resource, action).getExampleWrapper());
   }
 
   @Test
   public void testGetMadeUpName() throws Exception {
-    IAction action = mock(IAction.class);
-    when(action.getType()).thenReturn(GET);
-    IResource resource = mock(IResource.class);
-    when(resource.getUri()).thenReturn("/api/pet");
+    Operation action = mock(Operation.class);
+    when(action.method()).thenReturn(GET.getName());
+    EndPoint resource = mock(EndPoint.class);
+    when(resource.path()).thenReturn("/api/pet");
     API api = mock(API.class);
     assertEquals("retrievePet", new GenerationModel(api, resource, action).getName());
   }
 
   @Test
   public void testGetRealName() throws Exception {
-    IAction action = mock(IAction.class);
-    when(action.getType()).thenReturn(GET);
-    IResource resource = mock(IResource.class);
-    when(resource.getDisplayName()).thenReturn("Animal");
-    when(resource.getUri()).thenReturn("/api/pet");
+    Operation action = mock(Operation.class);
+    when(action.method()).thenReturn(GET.getName());
+    EndPoint resource = mock(EndPoint.class);
+    when(resource.name()).thenReturn("Animal");
+    when(resource.path()).thenReturn("/api/pet");
     API api = mock(API.class);
     assertEquals("retrieveAnimal", new GenerationModel(api, resource, action).getName());
   }
 
   @Test
   public void testGetMadeUpNameWithMimeTypes() throws Exception {
-    IAction action = mock(IAction.class);
-    when(action.getType()).thenReturn(POST);
-    IResource resource = mock(IResource.class);
-    when(resource.getUri()).thenReturn("/api/pet");
+    Operation action = mock(Operation.class);
+    when(action.method()).thenReturn(POST.getName());
+    EndPoint resource = mock(EndPoint.class);
+    when(resource.path()).thenReturn("/api/pet");
     API api = mock(API.class);
     GenerationModel model1 = new GenerationModel(api, resource, action, "text/xml");
     GenerationModel model2 = new GenerationModel(api, resource, action, "application/json");
@@ -174,10 +180,10 @@ public class GenerationModelTest {
 
   @Test
   public void testGetRelativeURI() throws Exception {
-    IAction action = mock(IAction.class);
-    when(action.getType()).thenReturn(GET);
-    IResource resource = mock(IResource.class);
-    when(resource.getUri()).thenReturn("/api/pet");
+    Operation action = mock(Operation.class);
+    when(action.method()).thenReturn(GET.getName());
+    EndPoint resource = mock(EndPoint.class);
+    when(resource.path()).thenReturn("/api/pet");
     API api = mock(API.class);
     assertEquals("/pet", new GenerationModel(api, resource, action).getRelativeURI());
   }

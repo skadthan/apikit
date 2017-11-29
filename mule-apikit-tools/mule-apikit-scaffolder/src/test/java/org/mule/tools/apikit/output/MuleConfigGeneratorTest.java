@@ -6,19 +6,17 @@
  */
 package org.mule.tools.apikit.output;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.mule.tools.apikit.Scaffolder.DEFAULT_MULE_VERSION;
-import static org.mule.tools.apikit.Scaffolder.DEFAULT_RUNTIME_EDITION;
-
-import org.mule.raml.interfaces.model.IAction;
-import org.mule.raml.interfaces.model.IActionType;
-import org.mule.raml.interfaces.model.IResource;
+import amf.model.EndPoint;
+import amf.model.Operation;
+import org.apache.commons.io.IOUtils;
+import org.apache.maven.plugin.logging.Log;
+import org.custommonkey.xmlunit.Diff;
+import org.custommonkey.xmlunit.XMLUnit;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 import org.mule.tools.apikit.Helper;
 import org.mule.tools.apikit.model.API;
 import org.mule.tools.apikit.model.HttpListener4xConfig;
@@ -31,15 +29,17 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-import org.apache.commons.io.IOUtils;
-import org.apache.maven.plugin.logging.Log;
-import org.custommonkey.xmlunit.Diff;
-import org.custommonkey.xmlunit.XMLUnit;
-import org.jdom2.Document;
-import org.jdom2.Element;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.mule.tools.apikit.Scaffolder.DEFAULT_MULE_VERSION;
+import static org.mule.tools.apikit.Scaffolder.DEFAULT_RUNTIME_EDITION;
+import static org.mule.tools.apikit.model.HttpMethod.GET;
+import static org.mule.tools.apikit.model.HttpMethod.POST;
 
 public class MuleConfigGeneratorTest {
 
@@ -50,17 +50,17 @@ public class MuleConfigGeneratorTest {
   public void testGenerate() throws Exception {
     List<GenerationModel> entries = new ArrayList<GenerationModel>();
 
-    IResource resource = mock(IResource.class);
+    EndPoint resource = mock(EndPoint.class);
 
-    when(resource.getUri()).thenReturn("/api/pet");
+    when(resource.path()).thenReturn("/api/pet");
 
-    IAction action = mock(IAction.class);
+    Operation action = mock(Operation.class);
 
-    when(action.getType()).thenReturn(IActionType.GET);
+    when(action.method()).thenReturn(GET.getName());
 
-    IAction postAction = mock(IAction.class);
+    Operation postAction = mock(Operation.class);
 
-    when(postAction.getType()).thenReturn(IActionType.POST);
+    when(postAction.method()).thenReturn(POST.getName());
 
     API api = mock(API.class);
     File raml = mock(File.class);

@@ -21,6 +21,7 @@
         <mule.version>4.2.0-SNAPSHOT</mule.version>
         <mule.core.version>4.2.0-SNAPSHOT</mule.core.version>
         <mule.api.version>1.2.0-SNAPSHOT</mule.api.version>
+        <mule.http.connector.version>1.2.0-SNAPSHOT</mule.http.connector.version>
         <licensePath>LICENSE_HEADER.txt</licensePath>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <formatterConfigPath>formatter.xml</formatterConfigPath>
@@ -118,7 +119,7 @@
 
     <distributionManagement>
         <repository>
-            <id>mulesoft-releases</id>
+            <id>mule-ee-releases</id>
             <name>MuleSoft Releases Repository</name>
             <url>https://repository-master.mulesoft.org/nexus/content/repositories/ci-releases/</url>
         </repository>

@@ -33,9 +33,8 @@
         <mule.test.unit.version>${runtime.version}</mule.test.unit.version>
         <mule.tests.component.plugin.version>${runtime.version}</mule.tests.component.plugin.version>
 
-        <mule.service.weave.version>2.1.1-SNAPSHOT</mule.service.weave.version>
+        <mule.service.weave.version>2.1.2-SNAPSHOT</mule.service.weave.version>
         <mule.plugin.maven.plugin.version>1.2.0-SNAPSHOT</mule.plugin.maven.plugin.version>
-        <mule.http.connector.version>1.2.0-SNAPSHOT</mule.http.connector.version>
         <mule.http.service.version>1.2.0-SNAPSHOT</mule.http.service.version>
         <mule.extensions.api.version>1.2.0-SNAPSHOT</mule.extensions.api.version>
         <mule.service.scheduler.version>1.2.0-SNAPSHOT</mule.service.scheduler.version>

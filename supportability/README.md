@@ -19,11 +19,10 @@ automatically generate backend implementation flows for it, and then run and tes
 See http://raml.org for more information about RAML.
 
 ## Documentation link
-* **APIkit Overview:** [link](https://mule4-docs.mulesoft.com/apikit/)
-* **What's new in APIkit:** [link](https://mule4-docs.mulesoft.com/apikit/apikit-whats-new)
-* **Release Notes:** [link](https://mule4-docs.mulesoft.com/release-notes/apikit-4.0-release-notes)
-* **APIkit XML Reference:** [link](https://mule4-docs.mulesoft.com/apikit/apikit-reference#apikit-dependency-information-beta)
-* **APIkit Error Handling Reference:** [link](https://mule4-docs.mulesoft.com/apikit/apikit-basic-anatomy)
+* **APIkit Overview:** [link](https://docs.mulesoft.com/apikit/v/4.x/overview-4)
+* **Release Notes:** [link](https://docs.mulesoft.com/release-notes/apikit-4.0-release-notes)
+* **APIkit XML Reference:** [link](https://docs.mulesoft.com/apikit/v/4.x/apikit-4-xml-reference)
+* **APIkit Error Handling Reference:** [link](https://docs.mulesoft.com/apikit/v/4.x/apikit-error-handling-reference)
 
 
 ## Code repositories

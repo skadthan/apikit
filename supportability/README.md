@@ -42,12 +42,12 @@ v1 branch is for RAML 0.8 but only for the community
   * Alejandro Amura: [alejandro.amura@mulesoft.com](mailto:alejandro.amura@mulesoft.com)
   * Santiago Fuentes: [santiago.fuentes@mulesoft.com](mailto:santiago.fuentes@mulesoft.com)
   * Diego Macias: [diego.macias@mulesoft.com](mailto:diego.macias@mulesoft.com)  
-  * Diego Larralde: [diego.larralde@mulesoft.com](mailto:diego.larralde@mulesoft.com)
 
 * **Team mailing account:** [apikit@mulesoft.com](mailto:apikit@mulesoft.com)
 
 ## Slack Channels
 * APIkit : [#apikit](https://mulesoft.slack.com/archives/apikit)
+* APIkit Support : [#apikit-support](https://mulesoft.slack.com/archives/apikit-support)
 * RAML : [#raml](https://mulesoft.slack.com/archives/raml)
 
 ### Jira Projects
@@ -102,16 +102,15 @@ When using APIkit with a Mule runtime, in the logs you may find these lines:
 
 ## Compatibility Matrix
 APIkit v4.0.0 (EA) is compatible with:
-* Mule Runtime 4.0.0
-* Anypoint Studio 7.0.0
-* Java Parser RAML 1.0 v1.0.16
-* Java Parser RAML 0.8 v0.8.19
+* Mule Runtime 4.0.0+
+* Anypoint Studio 7.0.0+
+* Java Parser RAML 1.0 v1.0.16+
+* Java Parser RAML 0.8 v0.8.19+
 * API Console 4.0.0
 
 ## Limitations
 This release does not support the following:
 * Inbound endpoints
-* APIkit for SOAP
 * OData
 
 Post requests using form parameters are supported, but not validated.

@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>raml-parser-interface-impl-amf</artifactId>
-    <name>RAML AMF parser interface implementation</name>
+    <name>AMF parser interface implementation</name>
     <packaging>jar</packaging>
 
     <properties>

@@ -7,23 +7,30 @@
 package org.mule.amf.impl.model;
 
 import amf.client.model.domain.Response;
-import java.util.Map;
 import org.mule.raml.interfaces.model.IMimeType;
 import org.mule.raml.interfaces.model.IResponse;
 import org.mule.raml.interfaces.model.parameter.IParameter;
 
+import java.util.Map;
+
+import static java.util.stream.Collectors.toMap;
+
 public class ResponseImpl implements IResponse {
 
-  public ResponseImpl(Response response) {}
+  Response response;
+
+  public ResponseImpl(Response response) {
+    this.response = response;
+  }
 
   @Override
   public Map<String, IMimeType> getBody() {
-    return null;
+    return response.payloads().stream().collect(toMap(p -> p.mediaType().value(), MimeTypeImpl::new));
   }
 
   @Override
   public boolean hasBody() {
-    return false;
+    return !response.payloads().isEmpty();
   }
 
   @Override

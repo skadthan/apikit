@@ -85,7 +85,7 @@ public class ActionImpl implements IAction {
     final Map<String, IMimeType> result = new LinkedHashMap<>();
 
     request.payloads().forEach(payload -> {
-      result.put(payload.schema().name().value(), new MimeTypeImpl(payload));
+      result.put(payload.mediaType().value(), new MimeTypeImpl(payload));
     });
 
     return result;

@@ -75,7 +75,7 @@ class ParameterImpl implements IParameter {
 
   @Override
   public boolean isRepeat() {
-    throw new UnsupportedOperationException();
+    return schema instanceof ArrayShape;
   }
 
   @Override

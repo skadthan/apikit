@@ -118,4 +118,7 @@ public class ResourceImpl implements IResource {
     return getUri();
   }
 
+  EndPoint getEndPoint() {
+    return endPoint;
+  }
 }

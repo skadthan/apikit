@@ -25,12 +25,14 @@ public class ResponseImpl implements IResponse {
 
   @Override
   public Map<String, IMimeType> getBody() {
-    return response.payloads().stream().collect(toMap(p -> p.mediaType().value(), MimeTypeImpl::new));
+    return response.payloads().stream()
+            .filter(p -> p.mediaType().nonNull())
+            .collect(toMap(p -> p.mediaType().value(), MimeTypeImpl::new));
   }
 
   @Override
   public boolean hasBody() {
-    return !response.payloads().isEmpty();
+    return !response.payloads().isEmpty() && response.payloads().stream().anyMatch(p -> p.mediaType().nonNull());
   }
 
   @Override

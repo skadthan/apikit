@@ -13,19 +13,14 @@ import amf.client.model.domain.WebApi;
 import amf.client.parse.Oas20Parser;
 import amf.client.parse.Parser;
 import amf.client.parse.RamlParser;
-import amf.client.render.AmfGraphRenderer;
-import amf.client.render.Oas20Renderer;
-import amf.client.render.Raml10Renderer;
 import amf.client.validate.ValidationReport;
-import amf.client.validate.ValidationResult;
 import amf.plugins.features.validation.AMFValidatorPlugin;
-import java.io.File;
+import amf.plugins.xml.XmlValidationPlugin;
+import org.mule.amf.impl.exceptions.ParserException;
+
 import java.net.URI;
-import java.nio.file.Path;
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-import org.mule.amf.impl.exceptions.ParserException;
 
 import static org.apache.commons.io.FilenameUtils.getExtension;
 
@@ -83,6 +78,7 @@ public class DocumentParser {
     try {
       AMF.init().get();
       AMFValidatorPlugin.withEnabledValidation(true);
+      amf.core.AMF.registerPlugin(new XmlValidationPlugin());
     } catch (final Exception e) {
       e.printStackTrace();
     }

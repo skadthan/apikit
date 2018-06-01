@@ -7,7 +7,9 @@
 package org.mule.amf.impl.model;
 
 import amf.client.model.domain.AnyShape;
+import amf.client.model.domain.NodeShape;
 import amf.client.model.domain.Payload;
+import amf.client.model.domain.PropertyShape;
 import amf.client.model.domain.Shape;
 import amf.client.validate.ValidationReport;
 import org.mule.amf.impl.parser.rule.ValidationResultImpl;
@@ -19,8 +21,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+import static com.sun.jmx.mbeanserver.Util.cast;
 import static java.util.Collections.emptyList;
+import static java.util.Collections.singletonList;
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toMap;
 
 public class MimeTypeImpl implements IMimeType {
 
@@ -42,7 +47,13 @@ public class MimeTypeImpl implements IMimeType {
 
   @Override
   public Map<String, List<IParameter>> getFormParameters() {
-    return null;
+    final Shape schema = payload.schema();
+
+    if (!(schema instanceof NodeShape)) throw new RuntimeException("Unexpected Shape " + schema.getClass());
+
+    final NodeShape nodeShape = cast(schema);
+    return nodeShape.properties().stream()
+            .collect(toMap(p -> p.range().name().value(), p -> singletonList(new ParameterImpl(p))));
   }
 
   @Override

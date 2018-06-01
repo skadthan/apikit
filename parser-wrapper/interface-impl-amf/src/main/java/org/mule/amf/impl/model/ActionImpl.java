@@ -13,6 +13,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
 import org.mule.raml.interfaces.model.IAction;
 import org.mule.raml.interfaces.model.IActionType;
 import org.mule.raml.interfaces.model.IMimeType;
@@ -22,6 +24,7 @@ import org.mule.raml.interfaces.model.ISecurityReference;
 import org.mule.raml.interfaces.model.parameter.IParameter;
 
 import static java.util.Collections.emptyMap;
+import static java.util.stream.Collectors.toMap;
 
 public class ActionImpl implements IAction {
 
@@ -82,13 +85,9 @@ public class ActionImpl implements IAction {
     if (request == null)
       return emptyMap();
 
-    final Map<String, IMimeType> result = new LinkedHashMap<>();
-
-    request.payloads().forEach(payload -> {
-      result.put(payload.mediaType().value(), new MimeTypeImpl(payload));
-    });
-
-    return result;
+    return request.payloads().stream()
+            .filter(p -> p.mediaType().nonNull())
+            .collect(toMap(p -> p.mediaType().value(), MimeTypeImpl::new));
   }
 
   @Override

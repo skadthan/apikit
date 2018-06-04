@@ -47,12 +47,10 @@ public class ParserService {
   }
 
   private void checkParserVersion() {
-    if (false) { //TODO the idea here is to check a property (system or by xml)
-      InputStream content = resourceLoaderV2.fetchResource(ramlPath);
-      if (content != null) {
-        String dump = StreamUtils.toString(content);
-        parser = ParserV2Utils.useParserV2(dump) ? RAML_V2 : RAML_V1;
-      }
+    InputStream content = resourceLoaderV2.fetchResource(ramlPath);
+    if (content != null) {
+      String dump = StreamUtils.toString(content);
+      parser = ParserV2Utils.useParserV2(dump) ? RAML_V2 : RAML_V1;
     }
 
     logger.debug("Using parser " + parser);

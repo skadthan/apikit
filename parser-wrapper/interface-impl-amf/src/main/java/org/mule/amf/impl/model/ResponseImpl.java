@@ -26,8 +26,8 @@ public class ResponseImpl implements IResponse {
   @Override
   public Map<String, IMimeType> getBody() {
     return response.payloads().stream()
-            .filter(p -> p.mediaType().nonNull())
-            .collect(toMap(p -> p.mediaType().value(), MimeTypeImpl::new));
+        .filter(p -> p.mediaType().nonNull())
+        .collect(toMap(p -> p.mediaType().value(), MimeTypeImpl::new));
   }
 
   @Override

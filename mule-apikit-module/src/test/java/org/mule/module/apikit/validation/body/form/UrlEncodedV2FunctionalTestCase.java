@@ -92,15 +92,15 @@ public class UrlEncodedV2FunctionalTestCase extends MuleArtifactFunctionalTestCa
   @Test
   public void getKeyWithDuplicatedValuesUrlencodedRequest() throws Exception {
     given().header("Content-Type", "application/x-www-form-urlencoded")
-            .formParam("first", "hello")
-            .formParam("second", "segundo")
-            .formParam("second", "segundo2")
-            .formParam("third", "true")
-            .expect()
-            .response()
-            .body(is("{message: 'Bad Request'}"))
-            .statusCode(400)
-            .when().post("/api/url-encoded-duplicated-key");
+        .formParam("first", "hello")
+        .formParam("second", "segundo")
+        .formParam("second", "segundo2")
+        .formParam("third", "true")
+        .expect()
+        .response()
+        .body(is("{message: 'Bad Request'}"))
+        .statusCode(400)
+        .when().post("/api/url-encoded-duplicated-key");
   }
 
 }

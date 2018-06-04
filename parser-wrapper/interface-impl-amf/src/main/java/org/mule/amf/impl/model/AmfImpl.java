@@ -107,7 +107,7 @@ public class AmfImpl implements IRaml {
 
   public Map<String, IResource> getRootResources() {
     return resources.values().stream().flatMap(m -> m.entrySet().stream())
-            .collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
+        .collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
   }
 
   Map<String, IResource> getResources(final ResourceImpl resource) {

@@ -86,8 +86,8 @@ public class ActionImpl implements IAction {
       return emptyMap();
 
     return request.payloads().stream()
-            .filter(p -> p.mediaType().nonNull())
-            .collect(toMap(p -> p.mediaType().value(), MimeTypeImpl::new));
+        .filter(p -> p.mediaType().nonNull())
+        .collect(toMap(p -> p.mediaType().value(), MimeTypeImpl::new));
   }
 
   @Override

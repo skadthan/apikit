@@ -96,8 +96,8 @@ public class ResourceImpl implements IResource {
 
   private static Map<String, IParameter> loadResolvedUriParameters(final EndPoint resource) {
     return resource.parameters().stream()
-            .filter(p -> !"version".equals(p.name().value())) // version is an special uri param so it is ignored
-            .collect(toMap(p -> p.name().value(), ParameterImpl::new));
+        .filter(p -> !"version".equals(p.name().value())) // version is an special uri param so it is ignored
+        .collect(toMap(p -> p.name().value(), ParameterImpl::new));
   }
 
   @Override

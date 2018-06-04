@@ -49,11 +49,12 @@ public class MimeTypeImpl implements IMimeType {
   public Map<String, List<IParameter>> getFormParameters() {
     final Shape schema = payload.schema();
 
-    if (!(schema instanceof NodeShape)) throw new RuntimeException("Unexpected Shape " + schema.getClass());
+    if (!(schema instanceof NodeShape))
+      throw new RuntimeException("Unexpected Shape " + schema.getClass());
 
     final NodeShape nodeShape = cast(schema);
     return nodeShape.properties().stream()
-            .collect(toMap(p -> p.range().name().value(), p -> singletonList(new ParameterImpl(p))));
+        .collect(toMap(p -> p.name().value(), p -> singletonList(new ParameterImpl(p))));
   }
 
   @Override

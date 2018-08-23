@@ -6,10 +6,10 @@
  */
 package org.mule.module.apikit;
 
-import org.junit.Test;
-
 import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
+
+import org.junit.Test;
 
 public class RouterInitializationTestCase extends AbstractRouterInitializationTestCase {
 

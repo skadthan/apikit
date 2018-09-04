@@ -21,15 +21,23 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.mule.runtime</groupId>
-            <artifactId>mule-core</artifactId>
-            <version>${mule.version}</version>
+            <groupId>org.mule</groupId>
+            <artifactId>mule-datasense-api</artifactId>
+            <version>${mule.datasense.version}</version>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>org.mule.runtime</groupId>
             <artifactId>mule-module-spring-config</artifactId>
             <version>${mule.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mule.runtime</groupId>
+            <artifactId>mule-extensions-api</artifactId>
+            <version>${mule.extensions.api.version}</version>
             <scope>provided</scope>
         </dependency>
 

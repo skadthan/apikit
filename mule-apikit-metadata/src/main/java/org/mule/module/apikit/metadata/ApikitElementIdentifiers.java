@@ -6,8 +6,9 @@
  */
 package org.mule.module.apikit.metadata;
 
-import org.mule.runtime.api.component.ComponentIdentifier;
-import org.mule.runtime.config.internal.model.ComponentModel;
+import static org.mule.runtime.core.api.extension.MuleExtensionModelProvider.MULE_NAME;
+import org.mule.runtime.app.declaration.api.ConfigurationElementDeclaration;
+import org.mule.runtime.app.declaration.api.ConstructElementDeclaration;
 
 /**
  * Helper class that tells if a given XML Component is some of the valid APIKit
@@ -22,32 +23,20 @@ public class ApikitElementIdentifiers {
 
   private ApikitElementIdentifiers() {}
 
-  private static final ComponentIdentifier FLOW =
-      ComponentIdentifier.buildFromStringRepresentation("flow");
+  private static final String FLOW = "flow";
 
-  private static final ComponentIdentifier APIKIT_CONFIG =
-      ComponentIdentifier.buildFromStringRepresentation("apikit:config");
+  private static final String APIKIT_EXTENSION_NAME = "APIKit";
 
-  private static final ComponentIdentifier APIKIT_FLOW_MAPPINGS =
-      ComponentIdentifier.buildFromStringRepresentation("apikit:flow-mappings");
+  private static final String CONFIG = "config";
 
-  private static final ComponentIdentifier APIKIT_FLOW_MAPPING =
-      ComponentIdentifier.buildFromStringRepresentation("apikit:flow-mapping");
-
-
-  public static boolean isFlow(ComponentModel component) {
-    return component.getIdentifier().equals(FLOW);
+  public static boolean isFlow(ConstructElementDeclaration constructElementDeclaration) {
+    return constructElementDeclaration.getName().equals(FLOW)
+        && constructElementDeclaration.getDeclaringExtension().equals(MULE_NAME);
   }
 
-  public static boolean isApikitConfig(ComponentModel component) {
-    return component.getIdentifier().equals(APIKIT_CONFIG);
+  public static boolean isApikitConfig(ConfigurationElementDeclaration configurationElementDeclaration) {
+    return configurationElementDeclaration.getName().equals(CONFIG)
+        && configurationElementDeclaration.getDeclaringExtension().equals(APIKIT_EXTENSION_NAME);
   }
 
-  public static boolean isFlowMappings(ComponentIdentifier identifier) {
-    return identifier.equals(APIKIT_FLOW_MAPPINGS);
-  }
-
-  public static boolean isFlowMapping(ComponentIdentifier identifier) {
-    return identifier.equals(APIKIT_FLOW_MAPPING);
-  }
 }

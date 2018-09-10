@@ -8,7 +8,7 @@ package org.mule.module.apikit.metadata.interfaces;
 
 import org.mule.raml.interfaces.model.IRaml;
 
-import java.io.File;
+import java.io.InputStream;
 
 /**
  * Interface that wraps a parser implementation
@@ -18,9 +18,9 @@ public interface Parseable {
   /**
    * Parses and builds the model for a RAML API
    *
-   * @param ramlFile The API
+   * @param ramlInputStream The API RAML file input stream
    * @param ramlContent
    * @return The RAML Model
    */
-  IRaml build(File ramlFile, String ramlContent);
+  IRaml build(InputStream ramlInputStream, String ramlContent);
 }

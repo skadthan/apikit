@@ -6,20 +6,21 @@
  */
 package org.mule.module.apikit.metadata.raml;
 
-import org.apache.commons.io.IOUtils;
-import org.mule.module.apikit.metadata.interfaces.Notifier;
-import org.mule.module.apikit.metadata.interfaces.Parseable;
-import org.mule.module.apikit.metadata.interfaces.ResourceLoader;
-import org.mule.raml.interfaces.model.IRaml;
-
-import java.io.*;
-import java.util.Optional;
-import org.mule.runtime.core.api.util.StringUtils;
-
 import static java.lang.Boolean.getBoolean;
 import static java.lang.String.format;
 import static java.util.Optional.empty;
 import static java.util.Optional.of;
+import org.mule.module.apikit.metadata.interfaces.Notifier;
+import org.mule.module.apikit.metadata.interfaces.Parseable;
+import org.mule.module.apikit.metadata.interfaces.ResourceLoader;
+import org.mule.raml.interfaces.model.IRaml;
+import org.mule.runtime.core.api.util.StringUtils;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Optional;
+
+import org.apache.commons.io.IOUtils;
 
 public class RamlHandler {
 
@@ -41,7 +42,7 @@ public class RamlHandler {
         return empty();
       }
 
-      final File resource = resourceLoader.getRamlResource(uri);
+      final InputStream resource = resourceLoader.getRamlResource(uri);
 
       if (resource == null) {
         notifier.error(format("RAML document '%s' not found.", uri));
@@ -63,8 +64,8 @@ public class RamlHandler {
     return useParserV2(ramlContent) ? new RamlV2Parser() : new RamlV1Parser();
   }
 
-  private String getRamlContent(File uri) throws IOException {
-    try (final InputStream is = new FileInputStream(uri)) {
+  private String getRamlContent(InputStream inputStream) throws IOException {
+    try (final InputStream is = inputStream) {
       return IOUtils.toString(is);
     }
   }

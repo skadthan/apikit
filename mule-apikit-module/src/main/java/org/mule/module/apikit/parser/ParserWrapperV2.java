@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
 public class ParserWrapperV2 implements ParserWrapper {
 
   private static final Logger logger = LoggerFactory.getLogger(ParserWrapperV2.class);
-  private static final String RESOURCE_FORMAT = "resource::%s:%s:%s:%s";
+  private static final String RESOURCE_FORMAT = "resource::%s:%s:%s:%s:%s:%s";
 
   private final String ramlPath;
   private final ResourceLoader resourceLoader;
@@ -60,7 +60,8 @@ public class ParserWrapperV2 implements ParserWrapper {
             String[] resourceParts = s.split("/");
             int length = resourceParts.length;
             return resourceLoader.fetchResource(format(RESOURCE_FORMAT, resourceParts[length - 4], resourceParts[length - 3],
-                                                       resourceParts[length - 2], resourceParts[length - 1]));
+                                                       resourceParts[length - 2], "raml-fragment", "zip",
+                                                       resourceParts[length - 1]));
           }
           return resourceLoader.fetchResource(s);
         }

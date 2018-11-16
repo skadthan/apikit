@@ -10,13 +10,26 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>mule-apikit-metadata</artifactId>
     <name>APIKit Metadata</name>
+    <packaging>mule-service</packaging>
 
     <properties>
         <licensePath>../LICENSE_HEADER.txt</licensePath>
         <formatterConfigPath>../formatter.xml</formatterConfigPath>
 
         <sonar.jacoco.reportPaths>../target/jacoco.exec</sonar.jacoco.reportPaths>
+        <mule.app.plugins.maven.plugin.version>1.1.6-SNAPSHOT</mule.app.plugins.maven.plugin.version>
     </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.mule.runtime.plugins</groupId>
+                <artifactId>mule-service-maven-plugin</artifactId>
+                <version>${mule.app.plugins.maven.plugin.version}</version>
+                <extensions>true</extensions>
+            </plugin>
+        </plugins>
+    </build>
 
     <dependencies>
         <dependency>

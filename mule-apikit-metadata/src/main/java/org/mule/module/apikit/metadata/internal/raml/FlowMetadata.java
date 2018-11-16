@@ -17,8 +17,6 @@ import org.mule.metadata.message.api.MessageMetadataType;
 import org.mule.metadata.message.api.MessageMetadataTypeBuilder;
 import org.mule.metadata.message.api.MuleEventMetadataType;
 import org.mule.metadata.message.api.MuleEventMetadataTypeBuilder;
-import org.mule.module.apikit.metadata.api.MetadataSource;
-import org.mule.module.apikit.metadata.api.Notifier;
 import org.mule.module.apikit.metadata.internal.model.ApiCoordinate;
 import org.mule.module.apikit.metadata.internal.model.CertificateFields;
 import org.mule.module.apikit.metadata.internal.model.HttpRequestAttributesFields;
@@ -31,6 +29,8 @@ import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
+import org.mule.runtime.apikit.metadata.api.MetadataSource;
+import org.mule.runtime.apikit.metadata.api.Notifier;
 
 import static java.lang.String.format;
 import static java.util.Collections.emptyMap;

@@ -4,7 +4,7 @@
  * license, a copy of which has been included with this distribution in the
  * LICENSE.txt file.
  */
-package org.mule.module.apikit.metadata.api;
+package org.mule.runtime.apikit.metadata.api;
 
 import java.io.IOException;
 import java.io.InputStream;

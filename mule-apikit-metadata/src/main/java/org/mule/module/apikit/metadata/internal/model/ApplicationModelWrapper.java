@@ -11,9 +11,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import org.mule.module.apikit.metadata.api.Notifier;
-import org.mule.module.apikit.metadata.api.ResourceLoader;
 import org.mule.runtime.api.component.ComponentIdentifier;
+import org.mule.runtime.apikit.metadata.api.Notifier;
+import org.mule.runtime.apikit.metadata.api.ResourceLoader;
 import org.mule.runtime.config.internal.model.ApplicationModel;
 import org.mule.runtime.config.internal.model.ComponentModel;
 

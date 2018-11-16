@@ -8,13 +8,13 @@ package org.mule.module.apikit.metadata.internal.amf;
 
 import amf.client.model.domain.WebApi;
 import java.util.Optional;
-import org.mule.module.apikit.metadata.api.Notifier;
-import org.mule.module.apikit.metadata.api.ResourceLoader;
 import org.mule.module.apikit.metadata.internal.model.MetadataResolver;
 import org.mule.module.apikit.metadata.internal.model.MetadataResolverFactory;
 import org.mule.module.apikit.metadata.internal.raml.RamlApiWrapper;
 import org.mule.module.apikit.metadata.internal.raml.RamlHandler;
 import org.mule.raml.interfaces.model.IRaml;
+import org.mule.runtime.apikit.metadata.api.Notifier;
+import org.mule.runtime.apikit.metadata.api.ResourceLoader;
 
 public class AutoHandler implements MetadataResolverFactory {
 

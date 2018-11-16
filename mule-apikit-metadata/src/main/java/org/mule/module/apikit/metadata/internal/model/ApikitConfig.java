@@ -8,14 +8,14 @@ package org.mule.module.apikit.metadata.internal.model;
 
 import java.util.List;
 import java.util.Optional;
-import org.mule.module.apikit.metadata.api.Notifier;
-import org.mule.module.apikit.metadata.api.ResourceLoader;
 import org.mule.module.apikit.metadata.internal.amf.AmfHandler;
 import org.mule.module.apikit.metadata.internal.amf.AutoHandler;
 import org.mule.module.apikit.metadata.internal.raml.RamlHandler;
 import org.mule.raml.interfaces.ParserType;
+import org.mule.runtime.apikit.metadata.api.Notifier;
+import org.mule.runtime.apikit.metadata.api.ResourceLoader;
 
-import static org.mule.module.apikit.metadata.api.Metadata.MULE_APIKIT_PARSER;
+import static org.mule.module.apikit.metadata.internal.MetadataBuilderImpl.MULE_APIKIT_PARSER;
 
 class ApikitConfig {
 

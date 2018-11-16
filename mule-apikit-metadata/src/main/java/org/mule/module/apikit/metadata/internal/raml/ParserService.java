@@ -9,9 +9,9 @@ package org.mule.module.apikit.metadata.internal.raml;
 import java.io.IOException;
 import java.net.URI;
 import org.apache.commons.io.IOUtils;
-import org.mule.module.apikit.metadata.api.ResourceLoader;
 import org.mule.raml.implv2.ParserV2Utils;
 import org.mule.raml.interfaces.model.IRaml;
+import org.mule.runtime.apikit.metadata.api.ResourceLoader;
 
 class ParserService {
 

@@ -10,10 +10,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import org.mule.metadata.api.model.FunctionType;
-import org.mule.module.apikit.metadata.api.Metadata;
-import org.mule.module.apikit.metadata.api.MetadataSource;
-import org.mule.module.apikit.metadata.api.Notifier;
-import org.mule.module.apikit.metadata.api.ResourceLoader;
+import org.mule.runtime.apikit.metadata.api.Metadata;
+import org.mule.runtime.apikit.metadata.api.MetadataSource;
+import org.mule.runtime.apikit.metadata.api.Notifier;
+import org.mule.runtime.apikit.metadata.api.ResourceLoader;
 import org.mule.runtime.config.internal.model.ApplicationModel;
 
 import static com.google.common.base.Strings.isNullOrEmpty;

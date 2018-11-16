@@ -7,7 +7,7 @@
 package org.mule.module.apikit.metadata.internal.model;
 
 import java.util.Optional;
-import org.mule.module.apikit.metadata.api.MetadataSource;
+import org.mule.runtime.apikit.metadata.api.MetadataSource;
 
 public interface MetadataResolver {
 

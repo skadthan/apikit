@@ -4,18 +4,13 @@
  * license, a copy of which has been included with this distribution in the
  * LICENSE.txt file.
  */
-package org.mule.module.apikit.metadata.api;
-
-import org.mule.metadata.api.model.FunctionType;
+package org.mule.runtime.apikit.metadata.api;
 
 import java.util.Optional;
-import org.mule.module.apikit.metadata.internal.raml.FlowMetadata;
+import org.mule.metadata.api.model.FunctionType;
 
 /**
  * Represents a source of Metadata
- *
- * Related clases:
- * {@link FlowMetadata}
  */
 public interface MetadataSource {
 

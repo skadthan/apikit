@@ -11,7 +11,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import org.mule.apikit.common.APISyncUtils;
 import org.mule.module.apikit.metadata.MetadataTestCase;
-import org.mule.module.apikit.metadata.api.ResourceLoader;
+import org.mule.runtime.apikit.metadata.api.ResourceLoader;
 
 public class TestResourceLoader implements ResourceLoader {
 

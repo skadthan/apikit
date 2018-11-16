@@ -6,8 +6,7 @@
  */
 package org.mule.module.apikit.metadata.internal.raml;
 
-import org.mule.module.apikit.metadata.api.MetadataSource;
-import org.mule.module.apikit.metadata.api.Notifier;
+import java.util.Optional;
 import org.mule.module.apikit.metadata.internal.model.ApiCoordinate;
 import org.mule.module.apikit.metadata.internal.model.MetadataResolver;
 import org.mule.raml.interfaces.model.IRaml;
@@ -16,7 +15,8 @@ import org.mule.raml.interfaces.model.parameter.IParameter;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
+import org.mule.runtime.apikit.metadata.api.MetadataSource;
+import org.mule.runtime.apikit.metadata.api.Notifier;
 
 import static java.util.Optional.ofNullable;
 

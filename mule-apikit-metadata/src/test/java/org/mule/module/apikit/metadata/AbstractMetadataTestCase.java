@@ -19,13 +19,14 @@ import java.util.List;
 import java.util.Optional;
 import org.mule.metadata.api.model.FunctionType;
 import org.mule.metadata.internal.utils.MetadataTypeWriter;
-import org.mule.module.apikit.metadata.api.Metadata;
+import org.mule.module.apikit.metadata.internal.MetadataBuilderImpl;
 import org.mule.module.apikit.metadata.internal.model.ApplicationModelWrapper;
 import org.mule.module.apikit.metadata.internal.model.Flow;
 import org.mule.module.apikit.metadata.utils.MetadataFixer;
 import org.mule.module.apikit.metadata.utils.MockedApplicationModel;
 import org.mule.module.apikit.metadata.utils.TestNotifier;
 import org.mule.module.apikit.metadata.utils.TestResourceLoader;
+import org.mule.runtime.apikit.metadata.api.Metadata;
 import org.mule.runtime.config.internal.model.ApplicationModel;
 
 import static java.lang.String.format;
@@ -90,7 +91,7 @@ public class AbstractMetadataTestCase {
 
   protected static Optional<FunctionType> getMetadata(final ApplicationModel applicationModel, final Flow flow) throws Exception {
 
-    final Metadata metadata = new Metadata.Builder()
+    final Metadata metadata = new MetadataBuilderImpl()
         .withApplicationModel(applicationModel)
         .withResourceLoader(new TestResourceLoader())
         .withNotifier(new TestNotifier()).build();

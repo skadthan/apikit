@@ -28,7 +28,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
-import static org.mule.module.apikit.metadata.api.Metadata.MULE_APIKIT_PARSER;
+import static org.mule.module.apikit.metadata.internal.MetadataBuilderImpl.MULE_APIKIT_PARSER;
 
 @RunWith(Parameterized.class)
 public class MetadataTestCase extends AbstractMetadataTestCase {

@@ -7,8 +7,8 @@
 package org.mule.module.apikit.metadata.utils;
 
 import java.util.Arrays;
-import org.mule.module.apikit.metadata.api.Notifier;
 import org.mule.runtime.api.util.MultiMap;
+import org.mule.runtime.apikit.metadata.api.Notifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

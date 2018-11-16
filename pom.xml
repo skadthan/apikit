@@ -12,7 +12,7 @@
         <module>mule-apikit-module</module>
         <module>mule-apikit-tools</module>
         <module>mule-apikit-examples</module>
-        <module>mule-apikit-metadata-service</module>
+        <module>mule-apikit-metadata-api</module>
         <module>mule-apikit-metadata</module>
         <module>mule-apikit-common</module>
         <module>mule-apikit-module-spi</module>

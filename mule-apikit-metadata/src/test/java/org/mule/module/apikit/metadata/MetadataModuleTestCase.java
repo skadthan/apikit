@@ -8,12 +8,13 @@ package org.mule.module.apikit.metadata;
 
 import org.junit.Test;
 import org.mule.metadata.api.model.FunctionType;
-import org.mule.module.apikit.metadata.api.Metadata;
-import org.mule.module.apikit.metadata.api.Notifier;
-import org.mule.module.apikit.metadata.api.ResourceLoader;
+import org.mule.module.apikit.metadata.internal.MetadataBuilderImpl;
 import org.mule.module.apikit.metadata.utils.MockedApplicationModel;
 import org.mule.module.apikit.metadata.utils.TestNotifier;
 import org.mule.module.apikit.metadata.utils.TestResourceLoader;
+import org.mule.runtime.apikit.metadata.api.Metadata;
+import org.mule.runtime.apikit.metadata.api.Notifier;
+import org.mule.runtime.apikit.metadata.api.ResourceLoader;
 import org.mule.runtime.config.internal.model.ApplicationModel;
 
 import java.util.Optional;
@@ -37,7 +38,7 @@ public class MetadataModuleTestCase {
     ApplicationModel applicationModel = createApplicationModel("org/mule/module/apikit/metadata/flow-mappings/app.xml");
     assertThat(applicationModel, notNullValue());
 
-    Metadata metadata = new Metadata.Builder()
+    Metadata metadata = new MetadataBuilderImpl()
         .withApplicationModel(applicationModel)
         .withResourceLoader(resourceLoader)
         .withNotifier(notifier)
@@ -67,7 +68,7 @@ public class MetadataModuleTestCase {
         createApplicationModel("org/mule/module/apikit/metadata/single-api-with-no-name/app.xml");
     assertThat(applicationModel, notNullValue());
 
-    Metadata metadata = new Metadata.Builder()
+    Metadata metadata = new MetadataBuilderImpl()
         .withApplicationModel(applicationModel)
         .withResourceLoader(resourceLoader)
         .withNotifier(notifier)
@@ -89,7 +90,7 @@ public class MetadataModuleTestCase {
     ApplicationModel applicationModel = createApplicationModel("org/mule/module/apikit/metadata/api-in-raml08/app.xml");
     assertThat(applicationModel, notNullValue());
 
-    Metadata metadata = new Metadata.Builder()
+    Metadata metadata = new MetadataBuilderImpl()
         .withApplicationModel(applicationModel)
         .withResourceLoader(resourceLoader)
         .withNotifier(notifier)
@@ -118,7 +119,7 @@ public class MetadataModuleTestCase {
     ApplicationModel applicationModel = createApplicationModel("org/mule/module/apikit/metadata/api-in-raml08/app.xml");
     assertThat(applicationModel, notNullValue());
 
-    final Metadata metadata = new Metadata.Builder()
+    final Metadata metadata = new MetadataBuilderImpl()
         .withApplicationModel(applicationModel)
         .withResourceLoader(resourceLoader)
         .withNotifier(notifier)
@@ -138,7 +139,7 @@ public class MetadataModuleTestCase {
     final ApplicationModel model = createApplicationModel("org/mule/module/apikit/metadata/invalid-raml-file-location/app.xml");
     assertThat(model, notNullValue());
 
-    final Metadata metadata = new Metadata.Builder()
+    final Metadata metadata = new MetadataBuilderImpl()
         .withApplicationModel(model)
         .withResourceLoader(resourceLoader)
         .withNotifier(notifier)

@@ -14,10 +14,10 @@ import amf.client.model.domain.WebApi;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import org.mule.module.apikit.metadata.api.MetadataSource;
-import org.mule.module.apikit.metadata.api.Notifier;
 import org.mule.module.apikit.metadata.internal.model.ApiCoordinate;
 import org.mule.module.apikit.metadata.internal.model.MetadataResolver;
+import org.mule.runtime.apikit.metadata.api.MetadataSource;
+import org.mule.runtime.apikit.metadata.api.Notifier;
 
 import static java.util.Collections.emptyMap;
 import static java.util.function.Function.identity;

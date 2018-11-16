@@ -32,6 +32,13 @@
             <scope>provided</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.mule.runtime</groupId>
+            <artifactId>mule-apikit-metadata-api</artifactId>
+            <version>1.0.0-SNAPSHOT</version> 
+            <scope>provided</scope>
+        </dependency>
+
         <!-- Metadata API -->
         <dependency>
             <groupId>org.mule.runtime</groupId>

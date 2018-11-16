@@ -8,29 +8,23 @@ package org.mule.module.apikit.metadata.internal.amf;
 
 import amf.client.environment.DefaultEnvironment;
 import amf.client.environment.Environment;
-import amf.client.model.document.Document;
 import amf.client.model.domain.WebApi;
-import amf.client.parse.Parser;
 import amf.client.remote.Content;
 import java.net.URI;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import org.apache.commons.io.IOUtils;
-import org.mule.amf.impl.DocumentParser;
 import org.mule.amf.impl.ParserWrapperAmf;
-import org.mule.amf.impl.exceptions.ParserException;
 import org.mule.apikit.common.APISyncUtils;
-import org.mule.module.apikit.metadata.api.Notifier;
-import org.mule.module.apikit.metadata.api.ResourceLoader;
 import org.mule.module.apikit.metadata.internal.model.MetadataResolver;
 import org.mule.module.apikit.metadata.internal.model.MetadataResolverFactory;
+import org.mule.runtime.apikit.metadata.api.Notifier;
+import org.mule.runtime.apikit.metadata.api.ResourceLoader;
 import org.mule.runtime.core.api.util.StringUtils;
 
 import static java.lang.String.format;
 import static java.util.Optional.empty;
 import static java.util.Optional.of;
-import static org.mule.apikit.common.APISyncUtils.isExchangeModules;
-import static org.mule.apikit.common.APISyncUtils.isSyncProtocol;
 
 public class AmfHandler implements MetadataResolverFactory {
 

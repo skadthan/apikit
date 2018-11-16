@@ -9,10 +9,10 @@ package org.mule.module.apikit.metadata.internal.raml;
 import java.io.InputStream;
 import java.net.URI;
 import javax.annotation.Nullable;
-import org.mule.module.apikit.metadata.api.ResourceLoader;
 import org.mule.raml.implv2.ParserV2Utils;
 import org.mule.raml.implv2.loader.ApiSyncResourceLoader;
 import org.mule.raml.interfaces.model.IRaml;
+import org.mule.runtime.apikit.metadata.api.ResourceLoader;
 
 class ParserWrapperV2 implements ParserWrapper {
 
@@ -43,51 +43,3 @@ class ParserWrapperV2 implements ParserWrapper {
     };
   }
 }
-
-
-/*
-
-  // Old Version adapted
-  
-  import org.mule.runtime.core.api.util.FileUtils;
-  import org.raml.v2.api.loader.CompositeResourceLoader;
-  import org.raml.v2.api.loader.DefaultResourceLoader;
-  import org.raml.v2.api.loader.FileResourceLoader;
-  
-  final File ramlFile = fetchRamlFile(ramlPath);
-  org.raml.v2.api.loader.ResourceLoader loader =
-              new CompositeResourceLoader(new DefaultResourceLoader(), new FileResourceLoader(ramlFile.getParentFile().getPath()));
-
-  return ParserV2Utils.build(loader, ramlPath, content);
-
-  private File fetchRamlFile(String ramlPath) {
-        return ofNullable(ramlPath)
-                .map(path -> Thread.currentThread().getContextClassLoader().getResource(path))
-                .filter(FileUtils::isFile)
-                .map(resource -> new File(resource.getFile()))
-                .orElse(null);
-  }
-
-  // Old version
-  
-  public class RamlV2Parser { 
-  
-    public IRaml build(File ramlFile, String ramlContent) {
-    org.raml.v2.api.loader.ResourceLoader resourceLoader =
-        new CompositeResourceLoader(new DefaultResourceLoader(), new FileResourceLoader(ramlFile.getParentFile().getPath()));
-    RamlModelResult ramlModelResult = new RamlModelBuilder(resourceLoader).buildApi(ramlContent, ramlFile.getPath());
-    return wrapApiModel(ramlModelResult);
-  }
-  
-  private static IRaml wrapApiModel(RamlModelResult ramlModelResult) {
-    if (ramlModelResult.hasErrors()) {
-      throw new RuntimeException("Invalid RAML descriptor.");
-    }
-    if (ramlModelResult.isVersion08()) {
-      return new RamlImpl08V2(ramlModelResult.getApiV08());
-    }
-    return new RamlImpl10V2(ramlModelResult.getApiV10());
-  }
-  }
-*/
-

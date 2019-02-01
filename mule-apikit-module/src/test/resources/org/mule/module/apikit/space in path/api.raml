@@ -1,4 +1,4 @@
-#%RAML 0.8
+#%RAML 1.0
 title: Sample API
 
 /schema:
@@ -6,8 +6,6 @@ title: Sample API
       body:
           application/json:
                 schema: !include more spaces/schema.json
-                #schema: !include refs/fstab.json
-                example: !include example.json
       responses:
             200:
                 body:
